@@ -25,9 +25,9 @@ public class MyOwnComponent {
         Double j = (floor(Double.parseDouble(lengthCalculator.getText()) / 109.6)) * (floor(Double.parseDouble(widthCalculator.getText()) / 175.4));
 
         if (i > j) {
-            answer.setText(i + " lengte");
+            answer.setText(i + " landscape");
         } else if (j > i) {
-            answer.setText(j + " breedte");
+            answer.setText(j + " portrait");
         }
 
         i = 0.0;
