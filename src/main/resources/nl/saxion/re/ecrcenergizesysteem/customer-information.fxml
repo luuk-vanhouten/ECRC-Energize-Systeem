@@ -14,7 +14,7 @@
       <TextField fx:id="phonenumber" layoutX="44.0" layoutY="257.0" promptText="Telefoonnummer" />
       <TextField fx:id="email" layoutX="225.0" layoutY="257.0" promptText="Emailadres" />
       <Button fx:id="exit" layoutX="177.0" layoutY="361.0" mnemonicParsing="false" text="Afbreken" />
-      <Button fx:id="next" layoutX="429.0" layoutY="361.0" mnemonicParsing="false" text="Doorgaan" />
+      <Button fx:id="next" layoutX="429.0" layoutY="361.0" mnemonicParsing="false" onAction="#pressed" text="Doorgaan" />
       <Label layoutX="44.0" layoutY="38.0" text="Voornaam" />
       <Label layoutX="44.0" layoutY="97.0" text="Postcode" />
       <Label layoutX="227.0" layoutY="38.0" text="Achternaam" />
