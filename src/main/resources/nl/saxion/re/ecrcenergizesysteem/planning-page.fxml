@@ -1,11 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Rectangle?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.saxion.re.ecrcenergizesysteem.HelloController">
    <children>
-      <ComboBox layoutX="403.0" layoutY="84.0" prefWidth="150.0" />
+      <ComboBox layoutX="403.0" layoutY="84.0" prefWidth="150.0" promptText="Team" visibleRowCount="4" />
       <DatePicker layoutX="164.0" layoutY="84.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#53a135" height="64.0" layoutY="336.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="600.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="75.0" stroke="WHITE" strokeType="INSIDE" width="600.0" />
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="217.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Pictures/logo.png" />
+         </image>
+      </ImageView>
+      <Button layoutX="478.0" layoutY="324.0" mnemonicParsing="false" text="Afbreken" />
    </children>
 </Pane>

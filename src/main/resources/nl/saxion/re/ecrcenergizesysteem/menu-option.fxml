@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Rectangle?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.saxion.re.ecrcenergizesysteem.MenuOption">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="75.0" stroke="WHITE" strokeType="INSIDE" width="600.0" />
-      <Button layoutX="195.0" layoutY="165.0" mnemonicParsing="false" text="Offertesysteem" />
-      <Button layoutX="307.0" layoutY="165.0" mnemonicParsing="false" text="Inkoopsysteem" />
-      <Button layoutX="188.0" layoutY="285.0" mnemonicParsing="false" text="Planningssysteem" />
+      <Button layoutX="195.0" layoutY="165.0" mnemonicParsing="false" onAction="#switchToSceneCustomerInformation" text="Offertesysteem" />
+      <Button layoutX="307.0" layoutY="165.0" mnemonicParsing="false" onAction="#switchToSceneStockPage" text="Inkoopsysteem" />
+      <Button layoutX="188.0" layoutY="285.0" mnemonicParsing="false" onAction="#switchToScenePlanning" text="Planningssysteem" />
       <ImageView fitHeight="64.0" fitWidth="77.0" layoutX="214.0" layoutY="215.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@Pictures/login.png" />
@@ -32,6 +33,6 @@
          </image>
       </ImageView>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#53a135" height="64.0" layoutY="340.0" strokeType="INSIDE" strokeWidth="0.0" width="600.0" />
-      <Button layoutX="490.0" layoutY="328.0" mnemonicParsing="false" text="Uitloggen" />
+      <Button layoutX="490.0" layoutY="328.0" mnemonicParsing="false" onAction="#switchToSceneLoginPage" text="Uitloggen" />
    </children>
 </Pane>

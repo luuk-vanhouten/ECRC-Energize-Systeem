@@ -22,7 +22,10 @@
             <children>
                 <Button alignment="CENTER" mnemonicParsing="false" onAction="#onPreviousButtonPressed" text="Previous" GridPane.rowIndex="3" />
                 <Button alignment="CENTER" mnemonicParsing="false" onAction="#onNextButtonPressed" text="Next" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                <Pane fx:id="panePicture" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="2" />
+                <Pane fx:id="panePicture" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="2">
+               <children>
+                  <ChoiceBox layoutX="67.0" layoutY="50.0" prefWidth="150.0" />
+               </children></Pane>
                 <TextField fx:id="lengthCalculator" GridPane.rowIndex="2" />
                 <TextField fx:id="widthCalculator" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                 <Button alignment="CENTER" mnemonicParsing="false" onAction="#onCalculateButtonPressed" text="Calculate" GridPane.columnIndex="4" GridPane.rowIndex="3" />
