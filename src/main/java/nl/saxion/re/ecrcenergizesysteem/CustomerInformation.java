@@ -50,4 +50,15 @@ public class CustomerInformation {
         stage.show();
 
     }
+
+    @FXML
+    public void switchToSceneCalculatorPage(ActionEvent event) throws IOException {
+        Offer customer = new Offer(firstname.getText(), lastname.getText(), postalCode.getText(), placeNumber.getText(), streetName.getText(), phoneNumber.getText(), email.getText());
+        Parent root = FXMLLoader.load(getClass().getResource("my-own-component.fxml"));
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+
+    }
 }
