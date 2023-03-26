@@ -15,13 +15,13 @@ import java.io.IOException;
 public class CustomerInformation {
 
     @FXML
-    private TextField firstname;
+    private TextField firstName;
     @FXML
-    private TextField lastname;
+    private TextField lastName;
     @FXML
     private TextField postalCode;
     @FXML
-    private TextField placeNumber;
+    private TextField houseNumber;
     @FXML
     private TextField streetName;
     @FXML
@@ -53,7 +53,13 @@ public class CustomerInformation {
 
     @FXML
     public void switchToSceneCalculatorPage(ActionEvent event) throws IOException {
-        Offer customer = new Offer(firstname.getText(), lastname.getText(), postalCode.getText(), placeNumber.getText(), streetName.getText(), phoneNumber.getText(), email.getText());
+        Offer customer = new Offer(firstName.getText(), lastName.getText(), postalCode.getText(), houseNumber.getText(), streetName.getText(), phoneNumber.getText(), email.getText());
+//        Alert gegevens = new Alert(Alert.AlertType.CONFIRMATION);
+//        gegevens.setHeaderText("gegevens");
+//        gegevens.show();
+//        gegevens.setContentText(customer.toString());
+
+      Postgres.writeToDatabases(firstName.getText(),lastName.getText(),email.getText(),Integer.parseInt(phoneNumber.getText()),streetName.getText(),Integer.parseInt(houseNumber.getText()), postalCode.getText());
         Parent root = FXMLLoader.load(getClass().getResource("my-own-component.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);

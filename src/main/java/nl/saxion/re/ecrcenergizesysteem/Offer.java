@@ -26,4 +26,16 @@ public class Offer {
         this.email = email;
     }
 
+    @Override
+    public String toString() {
+        return "Offer{" +
+                "firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", postalCode='" + postalCode + '\'' +
+                ", placeNumber='" + placeNumber + '\'' +
+                ", streetName='" + streetName + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }
 }

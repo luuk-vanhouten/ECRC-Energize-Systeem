@@ -13,7 +13,7 @@
       <TextField fx:id="houseNumber" layoutX="226.0" layoutY="114.0" promptText="Huisnummer" />
       <TextField fx:id="place" layoutX="44.0" layoutY="181.0" promptText="Woonplaats" />
       <TextField fx:id="streetName" layoutX="226.0" layoutY="181.0" promptText="Straatnaam" />
-      <TextField fx:id="phonenumber" layoutX="44.0" layoutY="257.0" promptText="Telefoonnummer" />
+      <TextField fx:id="phoneNumber" layoutX="44.0" layoutY="257.0" promptText="Telefoonnummer" />
       <TextField fx:id="email" layoutX="225.0" layoutY="257.0" promptText="Emailadres" />
       <Button fx:id="exit" layoutX="177.0" layoutY="361.0" mnemonicParsing="false" onAction="#switchToSceneMenuPage" text="Afbreken" />
       <Button fx:id="next" layoutX="429.0" layoutY="361.0" mnemonicParsing="false" onAction="#switchToSceneCalculatorPage" text="Doorgaan" />
