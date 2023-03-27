@@ -20,5 +20,6 @@
       </ImageView>
       <Button layoutX="478.0" layoutY="324.0" mnemonicParsing="false" onAction="#switchToSceneMenuPage" text="Afbreken" />
       <ChoiceBox fx:id="teamChoice" layoutX="392.0" layoutY="84.0" prefWidth="150.0" />
+      <Button layoutX="251.0" layoutY="200.0" mnemonicParsing="false" onAction="#loginAction" text="Button" />
    </children>
 </Pane>
