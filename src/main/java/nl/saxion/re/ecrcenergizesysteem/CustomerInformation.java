@@ -68,8 +68,6 @@ public class CustomerInformation {
     @FXML
     public void switchToSceneCalculatorPage(ActionEvent event) throws IOException {
         Postgres.ConnectionUtil.connectdb();
-
-        Postgres.writeToDatabases(firstName.getText(),lastName.getText(),email.getText(),Integer.parseInt(phoneNumber.getText()),streetName.getText(),Integer.parseInt(houseNumber.getText()), postalCode.getText());
         Parent root = FXMLLoader.load(getClass().getResource("my-own-component.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
