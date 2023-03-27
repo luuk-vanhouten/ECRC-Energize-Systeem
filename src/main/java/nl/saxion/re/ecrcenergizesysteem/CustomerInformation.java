@@ -53,7 +53,6 @@ public class CustomerInformation {
 
     @FXML
     public void switchToSceneCalculatorPage(ActionEvent event) throws IOException {
-        Offer customer = new Offer(firstName.getText(), lastName.getText(), postalCode.getText(), houseNumber.getText(), streetName.getText(), phoneNumber.getText(), email.getText());
 //        Alert gegevens = new Alert(Alert.AlertType.CONFIRMATION);
 //        gegevens.setHeaderText("gegevens");
 //        gegevens.show();

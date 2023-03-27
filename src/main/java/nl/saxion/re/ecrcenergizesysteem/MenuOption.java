@@ -20,6 +20,7 @@ public class MenuOption {
     @FXML
     Parent root;
 
+
     @FXML public void switchToScenePlanning(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("planning-page.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
