@@ -49,9 +49,9 @@ public class LoginPage implements Initializable {
             preparedStatement.setString(2, password);
             resultSet = preparedStatement.executeQuery();
             if(!resultSet.next()){
-                infoBox("Please enter correct Email and Password", null, "Failed");
+                infoBox("mislukt, probeer opnieuw in te loggen", null, "Failed");
             }else{
-                infoBox("Login Successfull",null,"Success" );
+                infoBox("Login gelukt",null,"Success" );
                 Node node = (Node)event.getSource();
                 dialogStage = (Stage) node.getScene().getWindow();
                 dialogStage.close();

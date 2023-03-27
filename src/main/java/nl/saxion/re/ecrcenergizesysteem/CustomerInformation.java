@@ -11,6 +11,12 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class CustomerInformation {
 
@@ -40,6 +46,14 @@ public class CustomerInformation {
 
     @FXML
     Parent root;
+    Connection connection = null;
+    PreparedStatement preparedStatement = null;
+    ResultSet resultSet = null;
+
+    public CustomerInformation() {
+        connection = Postgres.ConnectionUtil.connectdb();
+    }
+
 
     @FXML
     public void switchToSceneMenuPage(ActionEvent event) throws IOException {
@@ -53,17 +67,46 @@ public class CustomerInformation {
 
     @FXML
     public void switchToSceneCalculatorPage(ActionEvent event) throws IOException {
-//        Alert gegevens = new Alert(Alert.AlertType.CONFIRMATION);
-//        gegevens.setHeaderText("gegevens");
-//        gegevens.show();
-//        gegevens.setContentText(customer.toString());
+        Postgres.ConnectionUtil.connectdb();
 
-      Postgres.writeToDatabases(firstName.getText(),lastName.getText(),email.getText(),Integer.parseInt(phoneNumber.getText()),streetName.getText(),Integer.parseInt(houseNumber.getText()), postalCode.getText());
+        Postgres.writeToDatabases(firstName.getText(),lastName.getText(),email.getText(),Integer.parseInt(phoneNumber.getText()),streetName.getText(),Integer.parseInt(houseNumber.getText()), postalCode.getText());
         Parent root = FXMLLoader.load(getClass().getResource("my-own-component.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+//
+    }
+    @FXML
+    public void saveCustomerInDatabase(ActionEvent event) throws IOException{
 
+        String fistname = this.firstName.getText().toString();
+        String lastname = this.lastName.getText().toString();
+        String email = this.email.getText().toString();
+        int phonenumber= Integer.parseInt((this.phoneNumber.getText().toString()));
+        String streetname= this.streetName.getText().toString();
+        int housenumber= Integer.parseInt((this.houseNumber.getText().toString()));
+        String postalcode = this.postalCode.getText().toString();
+        int customer_id=0;
+
+        String sql = "INSERT INTO customer(firstname,lastname,email,phonenumber,housenumber,postalcode,streetname) VALUES(?, ?, ?,?,?,?,?)" ;
+
+        try{
+            preparedStatement = connection.prepareStatement(sql);
+//            preparedStatement.setInt(1,customer_id);
+            preparedStatement.setString(1, fistname);
+            preparedStatement.setString(2, lastname);
+            preparedStatement.setString(3, email);
+            preparedStatement.setInt(4, phonenumber);
+            preparedStatement.setInt(5, housenumber);
+            preparedStatement.setString(6, postalcode);
+            preparedStatement.setString(7, streetname);
+            preparedStatement.executeUpdate();
+            System.out.println("Sucessfully created.");
+
+        } catch (SQLException ex) {
+            Logger lgr = Logger.getLogger(Postgres.class.getName());
+            lgr.log(Level.SEVERE, ex.getMessage(), ex);
+        }
     }
 }
