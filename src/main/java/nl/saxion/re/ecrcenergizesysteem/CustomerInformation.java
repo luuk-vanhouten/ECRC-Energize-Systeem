@@ -62,34 +62,33 @@ public class CustomerInformation {
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
-
     }
 
     @FXML
     public void switchToSceneCalculatorPage(ActionEvent event) throws IOException {
-        Postgres.ConnectionUtil.connectdb();
-        Parent root = FXMLLoader.load(getClass().getResource("my-own-component.fxml"));
+        saveCustomerInDatabase(event); // save the customer before switching to calculator page
+        Parent root = FXMLLoader.load(getClass().getResource("calculator-page.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
-//
     }
+
     @FXML
     public void saveCustomerInDatabase(ActionEvent event) throws IOException{
 
         String fistname = this.firstName.getText().toString();
         String lastname = this.lastName.getText().toString();
         String email = this.email.getText().toString();
-        int phonenumber= Integer.parseInt((this.phoneNumber.getText().toString()));
-        String streetname= this.streetName.getText().toString();
-        int housenumber= Integer.parseInt((this.houseNumber.getText().toString()));
+        int phonenumber = Integer.parseInt((this.phoneNumber.getText().toString()));
+        String streetname = this.streetName.getText().toString();
+        int housenumber = Integer.parseInt((this.houseNumber.getText().toString()));
         String postalcode = this.postalCode.getText().toString();
-        int customer_id=0;
+        int customer_id = 0;
 
-        String sql = "INSERT INTO customer(firstname,lastname,email,phonenumber,housenumber,postalcode,streetname) VALUES(?, ?, ?,?,?,?,?)" ;
+        String sql = "INSERT INTO customer(firstname,lastname,email,phonenumber,housenumber,postalcode,streetname) VALUES(?, ?, ?,?,?,?,?)";
 
-        try{
+        try {
             preparedStatement = connection.prepareStatement(sql);
 //            preparedStatement.setInt(1,customer_id);
             preparedStatement.setString(1, fistname);
@@ -107,4 +106,18 @@ public class CustomerInformation {
             lgr.log(Level.SEVERE, ex.getMessage(), ex);
         }
     }
+
+//    @FXML
+//    public void initialize() {
+//        // add action listener to save button
+//        next.setOnAction(e -> {
+//            try {
+//                saveCustomerInDatabase();
+//            } catch (IOException ex) {
+//                Logger.getLogger(CustomerInformation.class.getName()).log(Level.SEVERE, null, ex);
+////            }
+////        });
+//    }
+
 }
+

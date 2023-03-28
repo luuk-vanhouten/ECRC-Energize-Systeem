@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="Energize ECRC@localhost" uuid="f6e246e6-2035-45a2-9431-f427f03e7009">
+    <data-source source="LOCAL" name="Energize ECRC@localhost" uuid="c52fe91e-17a5-4853-900f-2903333e5cd5">
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>

@@ -12,7 +12,7 @@ public class Postgres {
         public static Connection connectdb() {
             Connection conn = null;
             try {
-                String url = "jdbc:postgresql://localhost:5432/energizer";
+                String url = "jdbc:postgresql://localhost:5432/Energize ECRC";
                 String user = "postgres";
                 String password = "482148";
                 conn = DriverManager.getConnection(url, user, password);
