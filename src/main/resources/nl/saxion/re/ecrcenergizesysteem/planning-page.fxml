@@ -5,11 +5,10 @@
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Rectangle?>
-
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.saxion.re.ecrcenergizesysteem.PlanningPage">
-   <children>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.saxion.re.ecrcenergizesysteem.PlanningPage">
+   <AnchorPane>
       <DatePicker layoutX="164.0" layoutY="84.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#53a135" height="64.0" layoutY="336.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="600.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="75.0" stroke="WHITE" strokeType="INSIDE" width="600.0" />
@@ -21,5 +20,5 @@
       <Button layoutX="478.0" layoutY="324.0" mnemonicParsing="false" onAction="#switchToSceneMenuPage" text="Afbreken" />
       <ChoiceBox fx:id="teamChoice" layoutX="392.0" layoutY="84.0" prefWidth="150.0" />
       <Button layoutX="251.0" layoutY="200.0" mnemonicParsing="false" onAction="#loginAction" text="Button" />
-   </children>
-</Pane>
+   </AnchorPane>
+</AnchorPane>

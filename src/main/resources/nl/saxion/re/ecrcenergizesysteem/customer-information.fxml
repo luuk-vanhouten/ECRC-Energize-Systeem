@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.Pane?>
-
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.saxion.re.ecrcenergizesysteem.CustomerInformation">
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.saxion.re.ecrcenergizesysteem.CustomerInformation">
    <children>
       <TextField fx:id="firstName" layoutX="44.0" layoutY="55.0" promptText="Voornaam" />
       <TextField fx:id="lastName" layoutX="225.0" layoutY="55.0" promptText="Achternaam" />
@@ -26,4 +23,4 @@
       <Label layoutX="44.0" layoutY="240.0" text="Telefoonnummer" />
       <Label layoutX="226.0" layoutY="240.0" text="Emailadres" />
    </children>
-</Pane>
+</AnchorPane>
