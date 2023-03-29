@@ -19,5 +19,6 @@
         <Button layoutX="697.0" layoutY="430.0" mnemonicParsing="false" onAction="#switchToSceneMenuPage" text="Afbreken" />
         <ChoiceBox fx:id="teamChoice" layoutX="301.0" layoutY="362.0" prefWidth="150.0" />
         <Button layoutX="262.0" layoutY="404.0" mnemonicParsing="false" onAction="#loginAction" text="Button" />
+        <Button layoutX="717.0" layoutY="560.0" mnemonicParsing="false" onAction="#switchToSceneLoginPage" text="Uitloggen" />
     </children>
 </AnchorPane>

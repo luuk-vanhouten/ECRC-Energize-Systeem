@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.saxion.re.ecrcenergizesysteem.CustomerInformation">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.saxion.re.ecrcenergizesysteem.CustomerInformation">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="210.0" layoutX="-9.0" layoutY="-18.0" stroke="BLACK" strokeType="INSIDE" width="833.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#d9d9d9" height="443.0" layoutY="112.0" smooth="false" stroke="TRANSPARENT" strokeType="INSIDE" width="825.0" />
@@ -15,23 +18,24 @@
             <Image url="@Pictures/logo.png" />
          </image>
       </ImageView>
-      <TextField fx:id="firstName" layoutX="184.0" layoutY="287.0" prefHeight="26.0" prefWidth="178.0" promptText="Voornaam" />
-      <TextField fx:id="lastName" layoutX="417.0" layoutY="287.0" prefHeight="26.0" prefWidth="178.0" promptText="Achternaam" />
-      <TextField fx:id="postalCode" layoutX="186.0" layoutY="333.0" prefHeight="26.0" prefWidth="178.0" promptText="Postcode" />
-      <TextField fx:id="houseNumber" layoutX="417.0" layoutY="333.0" prefHeight="26.0" prefWidth="178.0" promptText="Huisnummer" />
-      <TextField fx:id="place" layoutX="186.0" layoutY="384.0" prefHeight="26.0" prefWidth="178.0" promptText="Woonplaats" />
-      <TextField fx:id="streetName" layoutX="417.0" layoutY="384.0" prefHeight="26.0" prefWidth="178.0" promptText="Straatnaam" />
-      <TextField fx:id="phoneNumber" layoutX="184.0" layoutY="438.0" prefHeight="26.0" prefWidth="178.0" promptText="Telefoonnummer" />
-      <TextField fx:id="email" layoutX="417.0" layoutY="438.0" prefHeight="26.0" prefWidth="178.0" promptText="Emailadres" />
-      <Button fx:id="exit" layoutX="222.0" layoutY="475.0" mnemonicParsing="false" onAction="#switchToSceneMenuPage" text="Afbreken" />
-      <Button fx:id="next" layoutX="492.0" layoutY="475.0" mnemonicParsing="false" onAction="#switchToSceneCalculatorPage" text="Doorgaan" />
-      <Label layoutX="183.0" layoutY="269.0" text="Voornaam" />
-      <Label layoutX="186.0" layoutY="315.0" text="Postcode" />
-      <Label layoutX="420.0" layoutY="269.0" text="Achternaam" />
-      <Label layoutX="418.0" layoutY="315.0" text="Huisnummer" />
-      <Label layoutX="190.0" layoutY="366.0" text="Woonplaats" />
-      <Label layoutX="422.0" layoutY="366.0" text="Straatnaam" />
-      <Label layoutX="190.0" layoutY="420.0" text="Telefoonnummer" />
-      <Label layoutX="424.0" layoutY="420.0" text="Emailadres" />
+      <TextField fx:id="firstName" layoutX="79.0" layoutY="210.0" prefHeight="26.0" prefWidth="294.0" promptText="Voornaam" />
+      <TextField fx:id="lastName" layoutX="428.0" layoutY="210.0" prefHeight="26.0" prefWidth="294.0" promptText="Achternaam" />
+      <TextField fx:id="postalCode" layoutX="79.0" layoutY="256.0" prefHeight="26.0" prefWidth="294.0" promptText="Postcode" />
+      <TextField fx:id="houseNumber" layoutX="428.0" layoutY="256.0" prefHeight="26.0" prefWidth="294.0" promptText="Huisnummer" />
+      <TextField fx:id="place" layoutX="79.0" layoutY="307.0" prefHeight="26.0" prefWidth="294.0" promptText="Woonplaats" />
+      <TextField fx:id="streetName" layoutX="428.0" layoutY="307.0" prefHeight="26.0" prefWidth="294.0" promptText="Straatnaam" />
+      <TextField fx:id="phoneNumber" layoutX="79.0" layoutY="361.0" prefHeight="26.0" prefWidth="294.0" promptText="Telefoonnummer" />
+      <TextField fx:id="email" layoutX="428.0" layoutY="361.0" prefHeight="26.0" prefWidth="294.0" promptText="Emailadres" />
+      <Button fx:id="exit" layoutX="308.0" layoutY="430.0" mnemonicParsing="false" onAction="#switchToSceneMenuPage" text="Afbreken" />
+      <Button fx:id="next" layoutX="428.0" layoutY="430.0" mnemonicParsing="false" onAction="#switchToSceneCalculatorPage" text="Doorgaan" />
+      <Label layoutX="87.0" layoutY="192.0" text="Voornaam" />
+      <Label layoutX="87.0" layoutY="238.0" text="Postcode" />
+      <Label layoutX="436.0" layoutY="192.0" text="Achternaam" />
+      <Label layoutX="436.0" layoutY="238.0" text="Huisnummer" />
+      <Label layoutX="87.0" layoutY="289.0" text="Woonplaats" />
+      <Label layoutX="436.0" layoutY="289.0" text="Straatnaam" />
+      <Label layoutX="87.0" layoutY="343.0" text="Telefoonnummer" />
+      <Label layoutX="436.0" layoutY="343.0" text="Emailadres" />
+      <Button layoutX="717.0" layoutY="560.0" mnemonicParsing="false" onAction="#switchToSceneLoginPage" text="Uitloggen" />
    </children>
 </AnchorPane>

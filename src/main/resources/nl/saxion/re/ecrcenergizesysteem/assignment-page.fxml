@@ -4,6 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.*?>
 
+<?import javafx.scene.control.Button?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.saxion.re.ecrcenergizesysteem.AssignmentPage">
     <children>
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="210.0" layoutX="-9.0" layoutY="-18.0" stroke="BLACK" strokeType="INSIDE" width="833.0" />
@@ -14,5 +15,6 @@
                 <Image url="@Pictures/logo.png" />
             </image>
         </ImageView>
+        <Button layoutX="717.0" layoutY="560.0" mnemonicParsing="false" onAction="#switchToSceneLoginPage" text="Uitloggen" />
     </children>
 </AnchorPane>

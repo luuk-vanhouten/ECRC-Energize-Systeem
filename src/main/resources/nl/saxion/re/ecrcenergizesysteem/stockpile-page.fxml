@@ -16,5 +16,6 @@
          </image>
       </ImageView>
       <Button layoutX="209.0" layoutY="175.0" mnemonicParsing="false" onAction="#saveCustomerInDatabase" text="Button" />
+      <Button layoutX="717.0" layoutY="560.0" mnemonicParsing="false" onAction="#switchToSceneLoginPage" text="Uitloggen" />
    </children>
 </AnchorPane>

@@ -19,5 +19,6 @@
             <Image url="@Pictures/logo.png" />
         </image>
     </ImageView>
+    <Button layoutX="717.0" layoutY="560.0" mnemonicParsing="false" onAction="#switchToSceneLoginPage" text="Uitloggen" />
 </children>
 </AnchorPane>

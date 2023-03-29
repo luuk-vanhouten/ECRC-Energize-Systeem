@@ -4,8 +4,9 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.saxion.re.ecrcenergizesysteem.CalculatorPage">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.saxion.re.ecrcenergizesysteem.CalculatorPage">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="210.0" layoutX="-9.0" layoutY="-18.0" stroke="BLACK" strokeType="INSIDE" width="833.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#d9d9d9" height="443.0" layoutY="112.0" smooth="false" stroke="TRANSPARENT" strokeType="INSIDE" width="825.0" />
@@ -15,15 +16,34 @@
             <Image url="@Pictures/logo.png" />
          </image>
       </ImageView>
-      <ChoiceBox fx:id="zonnepaneelselector" layoutX="357.0" layoutY="223.0" prefWidth="150.0" />
-      <ChoiceBox fx:id="customerEmailSelector" layoutX="171.0" layoutY="223.0" prefWidth="150.0" />
-      <TextField fx:id="lengthCalculator" layoutX="171.0" layoutY="266.0" prefHeight="26.0" prefWidth="150.0" promptText="Lengte" />
-      <TextField fx:id="widthCalculator" layoutX="357.0" layoutY="267.0" promptText="Breedte" />
-      <Label fx:id="answer" layoutX="589.0" layoutY="266.0" prefHeight="26.0" prefWidth="150.0" />
-      <Button layoutX="518.0" layoutY="267.0" mnemonicParsing="false" onAction="#onCalculateButtonPressed" text="Bereken" />
-      <ChoiceBox fx:id="omvormer" layoutX="171.0" layoutY="363.0" prefWidth="150.0" />
-      <TextField fx:id="opbrengstverlies" layoutX="171.0" layoutY="320.0" promptText="Opbrengstverlies" />
-      <Label fx:id="totalYield" layoutX="432.0" layoutY="320.0" prefHeight="26.0" prefWidth="86.0" />
-      <Button layoutX="357.0" layoutY="321.0" mnemonicParsing="false" onAction="#onOpbrengstButtonPressed" text="Bereken" />
+      <Label layoutX="121.0" layoutY="192.0" text="Type zonnepaneel" />
+      <ChoiceBox fx:id="zonnepaneelselector" layoutX="113.0" layoutY="209.0" prefWidth="294.0" />
+      <ChoiceBox fx:id="customerEmailSelector" layoutX="600.0" layoutY="136.0" prefWidth="150.0" />
+      <Label layoutX="121.0" layoutY="244.0" text="Lengte in CM" />
+      <TextField fx:id="lengthCalculator" layoutX="113.0" layoutY="262.0" prefHeight="26.0" prefWidth="128.0" promptText="Lengte" />
+      <Text layoutX="256.0" layoutY="280.0" strokeType="OUTSIDE" strokeWidth="0.0" text="X" wrappingWidth="8.536771774291992" />
+      <Label layoutX="287.0" layoutY="244.0" text="Breedte in CM" />
+      <TextField fx:id="widthCalculator" layoutX="279.0" layoutY="262.0" prefHeight="26.0" prefWidth="128.0" promptText="Breedte" />
+      <Text layoutX="412.0" layoutY="280.0" strokeType="OUTSIDE" strokeWidth="0.0" text="=" textAlignment="CENTER" wrappingWidth="17.600024414062318" />
+      <Button layoutX="436.0" layoutY="262.0" mnemonicParsing="false" onAction="#onCalculateButtonPressed" text="Bereken" />
+      <Label fx:id="answer" layoutX="502.0" layoutY="261.0" prefHeight="26.0" prefWidth="188.0" />
+      <Label layoutX="121.0" layoutY="294.0" text="Opbrengstverlies" />
+      <TextField fx:id="opbrengstverlies" layoutX="113.0" layoutY="311.0" prefHeight="26.0" prefWidth="294.0" promptText="Opbrengstverlies" />
+      <Text layoutX="412.0" layoutY="328.0" strokeType="OUTSIDE" strokeWidth="0.0" text="=" textAlignment="CENTER" wrappingWidth="17.600024414062318" />
+      <Button layoutX="436.0" layoutY="311.0" mnemonicParsing="false" onAction="#onOpbrengstButtonPressed" text="Bereken" />
+      <Label fx:id="totalYield" layoutX="502.0" layoutY="311.0" prefHeight="26.0" prefWidth="188.0" />
+      <Label layoutX="119.0" layoutY="349.0" text="Totaal aantal panelen" />
+      <TextField fx:id="totalNrOfPanels" layoutX="111.0" layoutY="366.0" prefHeight="26.0" prefWidth="157.0" promptText="Totaatl aantal panelen" />
+      <Text layoutX="273.0" layoutY="384.0" strokeType="OUTSIDE" strokeWidth="0.0" text="+" textAlignment="CENTER" wrappingWidth="8.536771774291992" />
+      <Label layoutX="285.0" layoutY="349.0" text="Type omvormer" />
+      <ChoiceBox fx:id="omvormer" layoutX="285.0" layoutY="366.0" prefHeight="26.0" prefWidth="150.0" />
+      <Text layoutX="440.0" layoutY="384.0" strokeType="OUTSIDE" strokeWidth="0.0" text="+" textAlignment="CENTER" wrappingWidth="8.536771774291992" />
+      <CheckBox fx:id="fase3" layoutX="451.0" layoutY="370.0" mnemonicParsing="false" text="Fase 3 aansluiting " />
+      <Text layoutX="571.0" layoutY="384.0" strokeType="OUTSIDE" strokeWidth="0.0" text="=" textAlignment="CENTER" wrappingWidth="17.600024414062318" />
+      <Label layoutX="596.0" layoutY="349.0" text="Totale kosten" />
+      <Label fx:id="totalCost" layoutX="594.0" layoutY="365.0" prefHeight="26.0" prefWidth="120.0" />
+      <Button fx:id="back" layoutX="324.0" layoutY="415.0" mnemonicParsing="false" onAction="#switchToSceneCustomerInformation" prefHeight="26.0" prefWidth="71.0" text="Terug" />
+      <Button fx:id="finish" layoutX="440.0" layoutY="415.0" mnemonicParsing="false" onAction="#onFinishButtonPressed" prefHeight="26.0" prefWidth="71.0" text="Afronden" />
+      <Button layoutX="717.0" layoutY="560.0" mnemonicParsing="false" onAction="#switchToSceneLoginPage" text="Uitloggen" />
    </children>
 </AnchorPane>

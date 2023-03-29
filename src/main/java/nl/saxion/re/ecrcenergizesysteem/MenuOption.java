@@ -44,6 +44,15 @@ public class MenuOption {
     }
 
     @FXML
+    public void switchToSceneOrderPage(ActionEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("order-page.fxml"));
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    @FXML
     public void switchToSceneLoginPage(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("login-page.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

@@ -3,11 +3,18 @@ package nl.saxion.re.ecrcenergizesysteem;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -45,6 +52,10 @@ public class CalculatorPage {
     TextField widthCalculator;
     @FXML
     TextField opbrengstverlies;
+    @FXML
+    private Stage stage;
+    @FXML
+    private Scene scene;
 
 
     public CalculatorPage() {
@@ -154,12 +165,31 @@ public class CalculatorPage {
     @FXML
     private void onOpbrengstButtonPressed() throws SQLException {
         SolarPanel selectedPanel = zonnepaneelselector.getSelectionModel().getSelectedItem();
-            int opbrengst = selectedPanel.getOpbrengst();
-            double verliesfactor = Double.parseDouble(opbrengstverlies.getText());
-            int aantalPanels = Integer.parseInt(answer.getText());
-            Double totaYield = opbrengst * verliesfactor * 0.85 * totalNumberOfSolarPanels;
-            totalYield.setText(totaYield.toString());
-        }
-
+        int opbrengst = selectedPanel.getOpbrengst();
+        double verliesfactor = Double.parseDouble(opbrengstverlies.getText());
+        int aantalPanels = Integer.parseInt(answer.getText());
+        Double totaYield = opbrengst * verliesfactor * 0.85 * totalNumberOfSolarPanels;
+        totalYield.setText(totaYield.toString());
     }
+
+    public void switchToSceneCustomerInformation(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("customer-information.fxml"));
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void onFinishButtonPressed(ActionEvent actionEvent) {
+    }
+
+    @FXML
+    public void switchToSceneLoginPage(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("login-page.fxml"));
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+}
 
