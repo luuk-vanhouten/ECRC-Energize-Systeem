@@ -17,12 +17,13 @@
       </ImageView>
       <ChoiceBox fx:id="zonnepaneelselector" layoutX="357.0" layoutY="223.0" prefWidth="150.0" />
       <ChoiceBox fx:id="customerEmailSelector" layoutX="171.0" layoutY="223.0" prefWidth="150.0" />
-      <TextField fx:id="lengthCalculator" layoutX="171.0" layoutY="266.0" prefHeight="26.0" prefWidth="150.0" promptText="lengte" />
-      <TextField fx:id="widthCalculator" layoutX="357.0" layoutY="267.0" promptText="breedte" />
+      <TextField fx:id="lengthCalculator" layoutX="171.0" layoutY="266.0" prefHeight="26.0" prefWidth="150.0" promptText="Lengte" />
+      <TextField fx:id="widthCalculator" layoutX="357.0" layoutY="267.0" promptText="Breedte" />
       <Label fx:id="answer" layoutX="589.0" layoutY="266.0" prefHeight="26.0" prefWidth="150.0" />
-      <Button layoutX="518.0" layoutY="267.0" mnemonicParsing="false" onAction="#onCalculateButtonPressed" text="Button" />
+      <Button layoutX="518.0" layoutY="267.0" mnemonicParsing="false" onAction="#onCalculateButtonPressed" text="Bereken" />
       <ChoiceBox fx:id="omvormer" layoutX="171.0" layoutY="363.0" prefWidth="150.0" />
-      <TextField fx:id="opbrengstverlies" layoutX="171.0" layoutY="320.0" promptText="opbrengstverlies" />
-      <Label fx:id="totalYield" layoutX="357.0" layoutY="320.0" prefHeight="26.0" prefWidth="86.0" />
+      <TextField fx:id="opbrengstverlies" layoutX="171.0" layoutY="320.0" promptText="Opbrengstverlies" />
+      <Label fx:id="totalYield" layoutX="432.0" layoutY="320.0" prefHeight="26.0" prefWidth="86.0" />
+      <Button layoutX="357.0" layoutY="321.0" mnemonicParsing="false" onAction="#onOpbrengstButtonPressed" text="Bereken" />
    </children>
 </AnchorPane>
