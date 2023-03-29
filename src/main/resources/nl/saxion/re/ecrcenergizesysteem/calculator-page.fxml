@@ -1,21 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.saxion.re.ecrcenergizesysteem.CalculatorPage">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.saxion.re.ecrcenergizesysteem.CalculatorPage">
    <children>
-      <ChoiceBox fx:id="zonnepaneelselector" layoutX="265.0" layoutY="89.0" prefWidth="150.0" />
-      <ChoiceBox fx:id="customerEmailSelector" layoutX="89.0" layoutY="89.0" prefWidth="150.0" />
-      <TextField fx:id="lengthCalculator" layoutX="99.0" layoutY="143.0" promptText="lengte" />
-      <TextField fx:id="widthCalculator" layoutX="266.0" layoutY="143.0" promptText="breedte" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="210.0" layoutX="-9.0" layoutY="-18.0" stroke="BLACK" strokeType="INSIDE" width="833.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#d9d9d9" height="443.0" layoutY="112.0" smooth="false" stroke="TRANSPARENT" strokeType="INSIDE" width="825.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#53a135" height="88.0" layoutX="-9.0" layoutY="512.0" smooth="false" stroke="TRANSPARENT" strokeType="INSIDE" width="833.0" />
+      <ImageView fitHeight="117.0" fitWidth="300.0" layoutX="226.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Pictures/logo.png" />
+         </image>
+      </ImageView>
+      <ChoiceBox fx:id="zonnepaneelselector" layoutX="357.0" layoutY="223.0" prefWidth="150.0" />
+      <ChoiceBox fx:id="customerEmailSelector" layoutX="171.0" layoutY="223.0" prefWidth="150.0" />
+      <TextField fx:id="lengthCalculator" layoutX="171.0" layoutY="266.0" prefHeight="26.0" prefWidth="150.0" promptText="lengte" />
+      <TextField fx:id="widthCalculator" layoutX="357.0" layoutY="267.0" promptText="breedte" />
       <Label fx:id="answer" layoutX="460.0" layoutY="126.0" prefHeight="58.0" prefWidth="67.0" />
-      <Button layoutX="24.0" layoutY="143.0" mnemonicParsing="false" onAction="#onCalculateButtonPressed" text="Button" />
-      <ChoiceBox fx:id="omvormer" layoutX="50.0" layoutY="237.0" prefWidth="150.0" />
-      <TextField fx:id="opbrengstverlies" layoutX="90.0" layoutY="193.0" promptText="opbrengstverlies" />
-      <Label layoutX="432.0" layoutY="197.0" prefHeight="26.0" prefWidth="86.0" />
+      <Button layoutX="518.0" layoutY="267.0" mnemonicParsing="false" onAction="#onCalculateButtonPressed" text="Button" />
+      <ChoiceBox fx:id="omvormer" layoutX="171.0" layoutY="363.0" prefWidth="150.0" />
+      <TextField fx:id="opbrengstverlies" layoutX="171.0" layoutY="320.0" promptText="opbrengstverlies" />
+      <Label layoutX="582.0" layoutY="266.0" prefHeight="26.0" prefWidth="86.0" />
    </children>
 </AnchorPane>

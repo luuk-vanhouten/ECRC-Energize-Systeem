@@ -28,9 +28,8 @@ public class CalculatorPage {
 
     @FXML
     private Label answer;
-
     private ObservableList<String> customerEmailData;
-
+    private Double totalNumberOfSolarPanels;
     @FXML
     private ChoiceBox<String> customerEmailSelector;
     @FXML
@@ -140,32 +139,34 @@ public class CalculatorPage {
             Double j = (floor(Double.parseDouble(widthCalculator.getText()) / length) * floor(Double.parseDouble(lengthCalculator.getText()) / width));
 
             if (i > j) {
+                totalNumberOfSolarPanels = i;
                 answer.setText(i + " landscape");
-            } else {
+            } else if (i < j){
+                totalNumberOfSolarPanels = j;
                 answer.setText(j + "portrait");
             }
         }
     }
-    @FXML
-    private void onOpbrengstButtonPressed() throws SQLException {
-        SolarPanel selectedPanel = zonnepaneelselector.getSelectionModel().getSelectedItem();
-        if (selectedPanel != null) {
-            int opbrengst = selectedPanel.getOpbrengst();
-            int verliesfactor = Integer.parseInt(opbrengstverlies.getText());
-            int aantalPanels = Integer.parseInt(answer.getText());
-
-
-
-
-            Double i = (floor(Double.parseDouble(widthCalculator.getText()) / width) * floor(Double.parseDouble(lengthCalculator.getText()) / length));
-            Double j = (floor(Double.parseDouble(widthCalculator.getText()) / length) * floor(Double.parseDouble(lengthCalculator.getText()) / width));
-
-            if (i > j) {
-                answer.setText(i + " landscape");
-            } else {
-                answer.setText(j + "portrait");
-            }
-        }
-    }
+//    @FXML
+//    private void onOpbrengstButtonPressed() throws SQLException {
+//        SolarPanel selectedPanel = zonnepaneelselector.getSelectionModel().getSelectedItem();
+//        if (selectedPanel != null) {
+//            int opbrengst = selectedPanel.getOpbrengst();
+//            int verliesfactor = Integer.parseInt(opbrengstverlies.getText());
+//            int aantalPanels = Integer.parseInt(answer.getText());
+//
+//
+//
+//
+//            Double i = (floor(Double.parseDouble(widthCalculator.getText()) / width) * floor(Double.parseDouble(lengthCalculator.getText()) / length));
+//            Double j = (floor(Double.parseDouble(widthCalculator.getText()) / length) * floor(Double.parseDouble(lengthCalculator.getText()) / width));
+//
+//            if (i > j) {
+//                answer.setText(i + " landscape");
+//            } else {
+//                answer.setText(j + "portrait");
+//            }
+//        }
+//    }
 
 }
