@@ -1,9 +1,11 @@
 package nl.saxion.re.ecrcenergizesysteem;
 
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 import java.sql.Connection;
@@ -13,39 +15,44 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class CalculatorPage  {
+import static java.lang.Math.floor;
+
+public class CalculatorPage {
 
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     ResultSet resultSet = null;
     ObservableList<String> data;
+
+    ObservableList<String> omvormers;
+
+    @FXML
+    private Label answer;
+
     private ObservableList<String> customerEmailData;
 
     @FXML
     private ChoiceBox<String> customerEmailSelector;
     @FXML
-    ChoiceBox<String> zonnepaneelselector;
-
+    ChoiceBox<String> omvormer;
     @FXML
-    TextField lenght;
+    ChoiceBox<SolarPanel> zonnepaneelselector;
+    @FXML
+    TextField lengthCalculator;
+    @FXML
+    TextField widthCalculator;
+    @FXML
+    TextField opbrengstverlies;
 
 
     public CalculatorPage() {
         connection = Postgres.ConnectionUtil.connectdb();
     }
 
-//    @Override
-//    public void start(Stage primarystage) throws Exception {
-//        Parent root = FXMLLoader.load(getClass().getResource("calculator-page.fxml"));
-//        Scene scene= new Scene(root,800,600);
-//        primarystage.setScene(scene);
-//        primarystage.show();
-//    }
 
-
-    public ObservableList<String> observableListSolarpanel() {
+    public ObservableList<SolarPanel> observableListSolarpanel() {
         String sql = "SELECT * FROM zonnepaneel";
-        ObservableList<String> data = FXCollections.observableArrayList();
+        ObservableList<SolarPanel> data = FXCollections.observableArrayList();
         try {
             preparedStatement = connection.prepareStatement(sql);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -54,12 +61,12 @@ public class CalculatorPage  {
             while (resultSet.next()) {
                 String name = resultSet.getString("product_name");
                 double price = resultSet.getDouble("price");
-                int length = resultSet.getInt("lengte");
-                int width = resultSet.getInt("breedte");
+                int lengte = resultSet.getInt("lengte");
+                int breedte = resultSet.getInt("breedte");
                 int zonnepanelen_id = resultSet.getInt("zonnepaneel_id");
                 int opbrengst = resultSet.getInt("opbrengst");
-                String total = String.format("%s - $%.2f-%dx%d", name, price, length, width, zonnepanelen_id, opbrengst);
-                data.add(total);
+                SolarPanel solarPanel = new SolarPanel(name, price, lengte, breedte, zonnepanelen_id, opbrengst);
+                data.add(solarPanel);
             }
             zonnepaneelselector.setItems(data);
         } catch (SQLException ex) {
@@ -68,6 +75,7 @@ public class CalculatorPage  {
         }
         return data;
     }
+
     public ObservableList<String> observableListCustomerEmails() {
         String sql = "SELECT email FROM customer";
         ObservableList<String> data = FXCollections.observableArrayList();
@@ -75,7 +83,7 @@ public class CalculatorPage  {
             preparedStatement = connection.prepareStatement(sql);
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                String email= resultSet.getString("email");
+                String email = resultSet.getString("email");
                 data.add(email);
             }
             customerEmailSelector.setItems(data);
@@ -86,12 +94,78 @@ public class CalculatorPage  {
         return data;
     }
 
+    public ObservableList<String> getObservableListOmvormer() {
+        String sql = "SELECT name, omvormer_max_capacity FROM omvormer";
+        ObservableList<String> observableListOmvormer = FXCollections.observableArrayList();
+        try {
+            preparedStatement = connection.prepareStatement(sql);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                String name = resultSet.getString("name");
+                int maxCapacity = resultSet.getInt("omvormer_max_capacity");
+                Omvormer omvormer = new Omvormer(name, maxCapacity);
+                observableListOmvormer.add(omvormer.getName());
+            }
+        } catch (SQLException ex) {
+            Logger logger = Logger.getLogger(Postgres.class.getName());
+            logger.log(Level.SEVERE, ex.getMessage(), ex);
+        }
+        return observableListOmvormer;
+    }
+
 
     @FXML
     public void initialize() {
-        customerEmailData=observableListCustomerEmails();
-        data = FXCollections.observableArrayList();
-        zonnepaneelselector.setItems(data);
-        observableListSolarpanel();
+        customerEmailData = observableListCustomerEmails();
+
+        ObservableList<SolarPanel> solarPanelList = observableListSolarpanel();
+        zonnepaneelselector.setItems(solarPanelList);
+
+        ObservableList<String> omvormerList = getObservableListOmvormer();
+        omvormer.setItems(omvormerList);
+        omvormer.getSelectionModel().selectedItemProperty().addListener(
+                (ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+                    // Handle selection change here
+                });
     }
+
+    @FXML
+    private void onCalculateButtonPressed() throws SQLException {
+        SolarPanel selectedPanel = zonnepaneelselector.getSelectionModel().getSelectedItem();
+        if (selectedPanel != null) {
+            int length = selectedPanel.getLength();
+            int width = selectedPanel.getWidth();
+
+            Double i = (floor(Double.parseDouble(widthCalculator.getText()) / width) * floor(Double.parseDouble(lengthCalculator.getText()) / length));
+            Double j = (floor(Double.parseDouble(widthCalculator.getText()) / length) * floor(Double.parseDouble(lengthCalculator.getText()) / width));
+
+            if (i > j) {
+                answer.setText(i + " landscape");
+            } else {
+                answer.setText(j + "portrait");
+            }
+        }
+    }
+    @FXML
+    private void onOpbrengstButtonPressed() throws SQLException {
+        SolarPanel selectedPanel = zonnepaneelselector.getSelectionModel().getSelectedItem();
+        if (selectedPanel != null) {
+            int opbrengst = selectedPanel.getOpbrengst();
+            int verliesfactor = Integer.parseInt(opbrengstverlies.getText());
+            int aantalPanels = Integer.parseInt(answer.getText());
+
+
+
+
+            Double i = (floor(Double.parseDouble(widthCalculator.getText()) / width) * floor(Double.parseDouble(lengthCalculator.getText()) / length));
+            Double j = (floor(Double.parseDouble(widthCalculator.getText()) / length) * floor(Double.parseDouble(lengthCalculator.getText()) / width));
+
+            if (i > j) {
+                answer.setText(i + " landscape");
+            } else {
+                answer.setText(j + "portrait");
+            }
+        }
+    }
+
 }
