@@ -6,9 +6,18 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="nl.saxion.re.ecrcenergizesysteem.OrderPage"
-            prefHeight="400.0" prefWidth="600.0">
-
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<AnchorPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="nl.saxion.re.ecrcenergizesysteem.OrderPage" prefHeight="600.0" prefWidth="800.0">
+<children>
+    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="210.0" layoutX="-9.0" layoutY="-18.0" stroke="BLACK" strokeType="INSIDE" width="833.0" />
+    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#d9d9d9" height="443.0" layoutY="112.0" smooth="false" stroke="TRANSPARENT" strokeType="INSIDE" width="825.0" />
+    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#53a135" height="88.0" layoutX="-9.0" layoutY="512.0" smooth="false" stroke="TRANSPARENT" strokeType="INSIDE" width="833.0" />
+    <ImageView fitHeight="117.0" fitWidth="300.0" layoutX="226.0" pickOnBounds="true" preserveRatio="true">
+        <image>
+            <Image url="@Pictures/logo.png" />
+        </image>
+    </ImageView>
+</children>
 </AnchorPane>

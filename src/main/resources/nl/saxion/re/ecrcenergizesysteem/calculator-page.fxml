@@ -19,10 +19,10 @@
       <ChoiceBox fx:id="customerEmailSelector" layoutX="171.0" layoutY="223.0" prefWidth="150.0" />
       <TextField fx:id="lengthCalculator" layoutX="171.0" layoutY="266.0" prefHeight="26.0" prefWidth="150.0" promptText="lengte" />
       <TextField fx:id="widthCalculator" layoutX="357.0" layoutY="267.0" promptText="breedte" />
-      <Label fx:id="answer" layoutX="460.0" layoutY="126.0" prefHeight="58.0" prefWidth="67.0" />
+      <Label fx:id="answer" layoutX="589.0" layoutY="266.0" prefHeight="26.0" prefWidth="150.0" />
       <Button layoutX="518.0" layoutY="267.0" mnemonicParsing="false" onAction="#onCalculateButtonPressed" text="Button" />
       <ChoiceBox fx:id="omvormer" layoutX="171.0" layoutY="363.0" prefWidth="150.0" />
       <TextField fx:id="opbrengstverlies" layoutX="171.0" layoutY="320.0" promptText="opbrengstverlies" />
-      <Label layoutX="582.0" layoutY="266.0" prefHeight="26.0" prefWidth="86.0" />
+      <Label fx:id="totalYield" layoutX="357.0" layoutY="320.0" prefHeight="26.0" prefWidth="86.0" />
    </children>
 </AnchorPane>
