@@ -15,8 +15,6 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static java.lang.Math.floor;
-
 public class CalculatorPage {
 
     Connection connection = null;
@@ -116,8 +114,13 @@ public class CalculatorPage {
     }
 
 
+    public Double getTotalNumberOfSolarPanels() {
+        return totalNumberOfSolarPanels;
+    }
+
     @FXML
     public void initialize() {
+        getTotalNumberOfSolarPanels();
         customerEmailData = observableListCustomerEmails();
 
         ObservableList<SolarPanel> solarPanelList = observableListSolarpanel();
@@ -129,37 +132,45 @@ public class CalculatorPage {
                 (ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
                     // Handle selection change here
                 });
+
+    }
+
+    public void setTotalNumberOfSolarPanels(Double totalNumberOfSolarPanels) {
+        this.totalNumberOfSolarPanels = totalNumberOfSolarPanels;
     }
 
     @FXML
-    private void onCalculateButtonPressed() throws SQLException {
+    void onCalculateButtonPressed() throws SQLException {
         SolarPanel selectedPanel = zonnepaneelselector.getSelectionModel().getSelectedItem();
-        if (selectedPanel != null) {
-            int length = selectedPanel.getLength();
-            int width = selectedPanel.getWidth();
+        int length = selectedPanel.getLength();
+        int width = selectedPanel.getWidth();
 
-            Double i = (floor(Double.parseDouble(widthCalculator.getText()) / width) * floor(Double.parseDouble(lengthCalculator.getText()) / length));
-            Double j = (floor(Double.parseDouble(widthCalculator.getText()) / length) * floor(Double.parseDouble(lengthCalculator.getText()) / width));
+        Double i = (Math.floor(Double.parseDouble(widthCalculator.getText()) / width) * Math.floor(Double.parseDouble(lengthCalculator.getText()) / length));
+        Double j = (Math.floor(Double.parseDouble(widthCalculator.getText()) / length) * Math.floor(Double.parseDouble(lengthCalculator.getText()) / width));
 
-            if (i > j) {
-                totalNumberOfSolarPanels = i;
-                answer.setText(i + " landscape");
-            } else if (i < j) {
-                totalNumberOfSolarPanels = j;
-                answer.setText(j + "portrait");
-            }
+        if (i > j) {
+            totalNumberOfSolarPanels = Double.valueOf(i.intValue());
+            answer.setText(i + " landscape");
+        } else {
+            totalNumberOfSolarPanels = Double.valueOf(j.intValue());
+            answer.setText(j + " portrait");
         }
+        System.out.println(totalNumberOfSolarPanels);
     }
+
 
     @FXML
-    private void onOpbrengstButtonPressed() throws SQLException {
+    void onOpbrengstButtonPressed() throws SQLException {
         SolarPanel selectedPanel = zonnepaneelselector.getSelectionModel().getSelectedItem();
-            int opbrengst = selectedPanel.getOpbrengst();
-            double verliesfactor = Double.parseDouble(opbrengstverlies.getText());
-            int aantalPanels = Integer.parseInt(answer.getText());
-            Double totaYield = opbrengst * verliesfactor * 0.85 * totalNumberOfSolarPanels;
-            totalYield.setText(totaYield.toString());
-        }
+        int opbrengst = selectedPanel.getOpbrengst();
+        double verliesfactor = Double.parseDouble(opbrengstverlies.getText());
+        System.out.println(totalNumberOfSolarPanels);
 
+        if (totalNumberOfSolarPanels != null) {
+            Double totalYieldValue = opbrengst * verliesfactor * 0.85 * totalNumberOfSolarPanels;
+            totalYield.setText(totalYieldValue.toString());
+        }
     }
+}
+
 
