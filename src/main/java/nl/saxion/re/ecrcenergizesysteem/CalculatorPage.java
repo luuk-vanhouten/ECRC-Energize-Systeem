@@ -28,6 +28,9 @@ public class CalculatorPage {
 
     @FXML
     private Label answer;
+    @FXML
+    private Label totalYield;
+
     private ObservableList<String> customerEmailData;
     private Double totalNumberOfSolarPanels;
     @FXML
@@ -141,32 +144,22 @@ public class CalculatorPage {
             if (i > j) {
                 totalNumberOfSolarPanels = i;
                 answer.setText(i + " landscape");
-            } else if (i < j){
+            } else if (i < j) {
                 totalNumberOfSolarPanels = j;
                 answer.setText(j + "portrait");
             }
         }
     }
-//    @FXML
-//    private void onOpbrengstButtonPressed() throws SQLException {
-//        SolarPanel selectedPanel = zonnepaneelselector.getSelectionModel().getSelectedItem();
-//        if (selectedPanel != null) {
-//            int opbrengst = selectedPanel.getOpbrengst();
-//            int verliesfactor = Integer.parseInt(opbrengstverlies.getText());
-//            int aantalPanels = Integer.parseInt(answer.getText());
-//
-//
-//
-//
-//            Double i = (floor(Double.parseDouble(widthCalculator.getText()) / width) * floor(Double.parseDouble(lengthCalculator.getText()) / length));
-//            Double j = (floor(Double.parseDouble(widthCalculator.getText()) / length) * floor(Double.parseDouble(lengthCalculator.getText()) / width));
-//
-//            if (i > j) {
-//                answer.setText(i + " landscape");
-//            } else {
-//                answer.setText(j + "portrait");
-//            }
-//        }
-//    }
 
-}
+    @FXML
+    private void onOpbrengstButtonPressed() throws SQLException {
+        SolarPanel selectedPanel = zonnepaneelselector.getSelectionModel().getSelectedItem();
+            int opbrengst = selectedPanel.getOpbrengst();
+            double verliesfactor = Double.parseDouble(opbrengstverlies.getText());
+            int aantalPanels = Integer.parseInt(answer.getText());
+            Double totaYield = opbrengst * verliesfactor * 0.85 * totalNumberOfSolarPanels;
+            totalYield.setText(totaYield.toString());
+        }
+
+    }
+
