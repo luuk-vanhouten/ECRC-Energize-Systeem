@@ -1,5 +1,7 @@
 package nl.saxion.re.ecrcenergizesysteem;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -33,7 +35,7 @@ public class CustomerInformation {
     @FXML
     private TextField phoneNumber;
     @FXML
-    private TextField email;
+    private TextField emailAdress;
     @FXML
     private Button exit;
     @FXML
@@ -64,38 +66,52 @@ public class CustomerInformation {
         stage.show();
     }
 
-    @FXML
-    public void saveCustomerInDatabase(ActionEvent event) throws IOException{
+//
+@FXML
+public ObservableList<Customer> saveCustomerInDatabase(ActionEvent event) throws IOException {
+    String firstname = firstName.getText();
+    String lastname = lastName.getText();
+    String emailadress = emailAdress.getText();
+    int phonenumber = Integer.parseInt(phoneNumber.getText());
+    String streetname = streetName.getText();
+    int housenumber = Integer.parseInt(houseNumber.getText());
+    String postalcode = postalCode.getText();
 
-        String fistname = this.firstName.getText().toString();
-        String lastname = this.lastName.getText().toString();
-        String email = this.email.getText().toString();
-        int phonenumber = Integer.parseInt((this.phoneNumber.getText().toString()));
-        String streetname = this.streetName.getText().toString();
-        int housenumber = Integer.parseInt((this.houseNumber.getText().toString()));
-        String postalcode = this.postalCode.getText().toString();
-        int customer_id = 0;
+    String sql = "INSERT INTO customer(firstname, lastname, email, phonenumber, housenumber, postalcode, streetname) VALUES(?, ?, ?, ?, ?, ?, ?) RETURNING *";
 
-        String sql = "INSERT INTO customer(firstname,lastname,email,phonenumber,housenumber,postalcode,streetname) VALUES(?, ?, ?,?,?,?,?)";
+    ObservableList<Customer> customerList = FXCollections.observableArrayList();
 
-        try {
-            preparedStatement = connection.prepareStatement(sql);
-//            preparedStatement.setInt(1,customer_id);
-            preparedStatement.setString(1, fistname);
-            preparedStatement.setString(2, lastname);
-            preparedStatement.setString(3, email);
-            preparedStatement.setInt(4, phonenumber);
-            preparedStatement.setInt(5, housenumber);
-            preparedStatement.setString(6, postalcode);
-            preparedStatement.setString(7, streetname);
-            preparedStatement.executeUpdate();
-            System.out.println("Sucessfully created.");
+    try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+        preparedStatement.setString(1, firstname);
+        preparedStatement.setString(2, lastname);
+        preparedStatement.setString(3, emailadress);
+        preparedStatement.setInt(4, phonenumber);
+        preparedStatement.setInt(5, housenumber);
+        preparedStatement.setString(6, postalcode);
+        preparedStatement.setString(7, streetname);
 
-        } catch (SQLException ex) {
-            Logger lgr = Logger.getLogger(Postgres.class.getName());
-            lgr.log(Level.SEVERE, ex.getMessage(), ex);
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        while (resultSet.next()) {
+            String firstName = resultSet.getString("firstname");
+            String lastName = resultSet.getString("lastname");
+            String email = resultSet.getString("email");
+            int phoneNumber = resultSet.getInt("phonenumber");
+            int houseNumber = resultSet.getInt("housenumber");
+            String postalCode = resultSet.getString("postalcode");
+            String streetName = resultSet.getString("streetname");
+            Customer customer = new Customer(firstName, lastName, email, phoneNumber, houseNumber, postalCode, streetName);
+            customerList.add(customer);
         }
+
+    } catch (SQLException ex) {
+        Logger logger = Logger.getLogger(Customer.class.getName());
+        logger.log(Level.SEVERE, ex.getMessage(), ex);
     }
+
+    return customerList;
+}
+
 
     @FXML
     public void switchToSceneLoginPage(ActionEvent event) throws IOException {

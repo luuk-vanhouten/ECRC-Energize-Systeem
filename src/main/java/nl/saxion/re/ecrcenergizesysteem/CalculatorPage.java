@@ -1,6 +1,5 @@
 package nl.saxion.re.ecrcenergizesysteem;
 
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -9,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -21,8 +21,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import static java.lang.Math.floor;
 
 public class CalculatorPage {
 
@@ -38,12 +36,11 @@ public class CalculatorPage {
     @FXML
     private Label totalYield;
 
-    private ObservableList<String> customerEmailData;
     private Double totalNumberOfSolarPanels;
     @FXML
-    private ChoiceBox<String> customerEmailSelector;
+    private ChoiceBox<Customer> customerEmailSelector;
     @FXML
-    ChoiceBox<String> omvormer;
+    ChoiceBox<Omvormer> omvormer;
     @FXML
     ChoiceBox<SolarPanel> zonnepaneelselector;
     @FXML
@@ -56,6 +53,8 @@ public class CalculatorPage {
     private Stage stage;
     @FXML
     private Scene scene;
+    @FXML
+    private CheckBox fase3;
 
 
     public CalculatorPage() {
@@ -89,36 +88,47 @@ public class CalculatorPage {
         return data;
     }
 
-    public ObservableList<String> observableListCustomerEmails() {
-        String sql = "SELECT email FROM customer";
-        ObservableList<String> data = FXCollections.observableArrayList();
+    public ObservableList<Customer> observableListCustomerEmails() {
+        String sql = "SELECT email,phonenumber FROM customer";
+        ObservableList<Customer> data = FXCollections.observableArrayList();
+
         try {
             preparedStatement = connection.prepareStatement(sql);
             resultSet = preparedStatement.executeQuery();
+
             while (resultSet.next()) {
                 String email = resultSet.getString("email");
-                data.add(email);
+                int phoneNumber = resultSet.getInt("phonenumber"); // Get the phone number from the result set
+                Customer customer = new Customer(email,phoneNumber);
+                data.add(customer);
             }
+
             customerEmailSelector.setItems(data);
+
         } catch (SQLException ex) {
             Logger lgr = Logger.getLogger(Postgres.class.getName());
             lgr.log(Level.SEVERE, ex.getMessage(), ex);
         }
+
         return data;
     }
 
-    public ObservableList<String> getObservableListOmvormer() {
-        String sql = "SELECT name, omvormer_max_capacity FROM omvormer";
-        ObservableList<String> observableListOmvormer = FXCollections.observableArrayList();
+    public ObservableList<Omvormer> getObservableListOmvormer() {
+        String sql = "SELECT* FROM omvormer";
+        ObservableList<Omvormer> observableListOmvormer = FXCollections.observableArrayList();
         try {
             preparedStatement = connection.prepareStatement(sql);
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 String name = resultSet.getString("name");
                 int maxCapacity = resultSet.getInt("omvormer_max_capacity");
-                Omvormer omvormer = new Omvormer(name, maxCapacity);
-                observableListOmvormer.add(omvormer.getName());
+                double price = resultSet.getDouble("price");
+                int id = resultSet.getInt("omvormer_id");
+                Omvormer omvormer = new Omvormer(name, maxCapacity, price, id);
+                observableListOmvormer.add(omvormer);
             }
+            omvormer.setItems(observableListOmvormer);
+
         } catch (SQLException ex) {
             Logger logger = Logger.getLogger(Postgres.class.getName());
             logger.log(Level.SEVERE, ex.getMessage(), ex);
@@ -129,47 +139,48 @@ public class CalculatorPage {
 
     @FXML
     public void initialize() {
-        customerEmailData = observableListCustomerEmails();
-
+ObservableList<Customer> customerObservableList = observableListCustomerEmails();
+customerEmailSelector.setItems(customerObservableList);
         ObservableList<SolarPanel> solarPanelList = observableListSolarpanel();
         zonnepaneelselector.setItems(solarPanelList);
 
-        ObservableList<String> omvormerList = getObservableListOmvormer();
+        ObservableList<Omvormer> omvormerList = getObservableListOmvormer();
         omvormer.setItems(omvormerList);
-        omvormer.getSelectionModel().selectedItemProperty().addListener(
-                (ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
-                    // Handle selection change here
-                });
     }
 
     @FXML
-    private void onCalculateButtonPressed() throws SQLException {
+    void onCalculateButtonPressed() throws SQLException {
         SolarPanel selectedPanel = zonnepaneelselector.getSelectionModel().getSelectedItem();
-        if (selectedPanel != null) {
-            int length = selectedPanel.getLength();
-            int width = selectedPanel.getWidth();
+        int length = selectedPanel.getLength();
+        int width = selectedPanel.getWidth();
 
-            Double i = (floor(Double.parseDouble(widthCalculator.getText()) / width) * floor(Double.parseDouble(lengthCalculator.getText()) / length));
-            Double j = (floor(Double.parseDouble(widthCalculator.getText()) / length) * floor(Double.parseDouble(lengthCalculator.getText()) / width));
+        Double i = (Math.floor(Double.parseDouble(widthCalculator.getText()) / width) * Math.floor(Double.parseDouble(lengthCalculator.getText()) / length));
+        Double j = (Math.floor(Double.parseDouble(widthCalculator.getText()) / length) * Math.floor(Double.parseDouble(lengthCalculator.getText()) / width));
 
-            if (i > j) {
-                totalNumberOfSolarPanels = i;
-                answer.setText(i + " landscape");
-            } else if (i < j) {
-                totalNumberOfSolarPanels = j;
-                answer.setText(j + "portrait");
-            }
+        if (i > j) {
+            totalNumberOfSolarPanels = Double.valueOf(i.intValue());
+            answer.setText(i + " landscape");
+        } else {
+            totalNumberOfSolarPanels = Double.valueOf(j.intValue());
+            answer.setText(j + " portrait");
         }
+        System.out.println(totalNumberOfSolarPanels);
     }
 
     @FXML
-    private void onOpbrengstButtonPressed() throws SQLException {
+    void onOpbrengstButtonPressed() throws SQLException {
         SolarPanel selectedPanel = zonnepaneelselector.getSelectionModel().getSelectedItem();
         int opbrengst = selectedPanel.getOpbrengst();
         double verliesfactor = Double.parseDouble(opbrengstverlies.getText());
-        int aantalPanels = Integer.parseInt(answer.getText());
-        Double totaYield = opbrengst * verliesfactor * 0.85 * totalNumberOfSolarPanels;
-        totalYield.setText(totaYield.toString());
+        System.out.println(totalNumberOfSolarPanels);
+
+        if (totalNumberOfSolarPanels != null) {
+            Double totalYieldValue = opbrengst * verliesfactor * 0.85 * totalNumberOfSolarPanels;
+            totalYield.setText(totalYieldValue.toString());
+            fase3.setSelected(totalYieldValue > 6000);
+
+        }
+
     }
 
     public void switchToSceneCustomerInformation(ActionEvent event) throws IOException {
@@ -181,7 +192,31 @@ public class CalculatorPage {
     }
 
     public void onFinishButtonPressed(ActionEvent actionEvent) {
+        Customer customer = customerEmailSelector.getSelectionModel().getSelectedItem();
+        SolarPanel selectedPanel = zonnepaneelselector.getSelectionModel().getSelectedItem();
+        Omvormer selectedOmvormer = omvormer.getSelectionModel().getSelectedItem();
+        int total= (int) Math.round(totalNumberOfSolarPanels);
+
+        String insertOfferSql = "INSERT INTO offer(phonenumber, zonnepaneel_id, quantity_zonnepaneel, omvormer) VALUES(?, ?, ?, ?)";
+
+        try {
+            preparedStatement = connection.prepareStatement(insertOfferSql);
+            preparedStatement.setInt(1, customer.getPhoneNumber()); // Make sure this value exists in the "customer" table
+            preparedStatement.setInt(2, selectedPanel.getId());
+            preparedStatement.setInt(3, total);
+            preparedStatement.setInt(4, selectedOmvormer.getId());
+
+            int rowsAffected = preparedStatement.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("Offer saved successfully.");
+            } else {
+                System.out.println("Failed to save the offer.");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CalculatorPage.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
+
 
     @FXML
     public void switchToSceneLoginPage(ActionEvent event) throws IOException {
