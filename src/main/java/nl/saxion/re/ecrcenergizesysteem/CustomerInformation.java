@@ -66,51 +66,51 @@ public class CustomerInformation {
         stage.show();
     }
 
-//
-@FXML
-public ObservableList<Customer> saveCustomerInDatabase(ActionEvent event) throws IOException {
-    String firstname = firstName.getText();
-    String lastname = lastName.getText();
-    String emailadres = emailadress.getText();
-    int phonenumber = Integer.parseInt(phoneNumber.getText());
-    String streetname = streetName.getText();
-    int housenumber = Integer.parseInt(houseNumber.getText());
-    String postalcode = postalCode.getText();
+    //
+    @FXML
+    public ObservableList<Customer> saveCustomerInDatabase(ActionEvent event) throws IOException {
+        String firstname = firstName.getText();
+        String lastname = lastName.getText();
+        String emailadres = emailadress.getText();
+        int phonenumber = Integer.parseInt(phoneNumber.getText());
+        String streetname = streetName.getText();
+        int housenumber = Integer.parseInt(houseNumber.getText());
+        String postalcode = postalCode.getText();
 
-    String sql = "INSERT INTO customer(firstname, lastname, email, phonenumber, housenumber, postalcode, streetname) VALUES(?, ?, ?, ?, ?, ?, ?) RETURNING *";
+        String sql = "INSERT INTO customer(firstname, lastname, email, phonenumber, housenumber, postalcode, streetname) VALUES(?, ?, ?, ?, ?, ?, ?) RETURNING *";
 
-    ObservableList<Customer> customerList = FXCollections.observableArrayList();
+        ObservableList<Customer> customerList = FXCollections.observableArrayList();
 
-    try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-        preparedStatement.setString(1, firstname);
-        preparedStatement.setString(2, lastname);
-        preparedStatement.setString(3, emailadres);
-        preparedStatement.setInt(4, phonenumber);
-        preparedStatement.setInt(5, housenumber);
-        preparedStatement.setString(6, postalcode);
-        preparedStatement.setString(7, streetname);
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, firstname);
+            preparedStatement.setString(2, lastname);
+            preparedStatement.setString(3, emailadres);
+            preparedStatement.setInt(4, phonenumber);
+            preparedStatement.setInt(5, housenumber);
+            preparedStatement.setString(6, postalcode);
+            preparedStatement.setString(7, streetname);
 
-        ResultSet resultSet = preparedStatement.executeQuery();
+            ResultSet resultSet = preparedStatement.executeQuery();
 
-        while (resultSet.next()) {
-            String firstName = resultSet.getString("firstname");
-            String lastName = resultSet.getString("lastname");
-            String emailAdress = resultSet.getString("email");
-            int phoneNumber = resultSet.getInt("phonenumber");
-            int houseNumber = resultSet.getInt("housenumber");
-            String postalCode = resultSet.getString("postalcode");
-            String streetName = resultSet.getString("streetname");
-            Customer customer = new Customer(firstName, lastName, emailAdress, phoneNumber, houseNumber, postalCode, streetName);
-            customerList.add(customer);
+            while (resultSet.next()) {
+                String firstName = resultSet.getString("firstname");
+                String lastName = resultSet.getString("lastname");
+                String emailAdress = resultSet.getString("email");
+                int phoneNumber = resultSet.getInt("phonenumber");
+                int houseNumber = resultSet.getInt("housenumber");
+                String postalCode = resultSet.getString("postalcode");
+                String streetName = resultSet.getString("streetname");
+                Customer customer = new Customer(firstName, lastName, emailAdress, phoneNumber, houseNumber, postalCode, streetName);
+                customerList.add(customer);
+            }
+
+        } catch (SQLException ex) {
+            Logger logger = Logger.getLogger(Customer.class.getName());
+            logger.log(Level.SEVERE, ex.getMessage(), ex);
         }
 
-    } catch (SQLException ex) {
-        Logger logger = Logger.getLogger(Customer.class.getName());
-        logger.log(Level.SEVERE, ex.getMessage(), ex);
+        return customerList;
     }
-
-    return customerList;
-}
 
 
     @FXML

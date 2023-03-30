@@ -35,8 +35,11 @@ public class CalculatorPage {
     private Label answer;
     @FXML
     private Label totalYield;
-
+    @FXML
+    private Label totalCost;
     private int totalNumberOfSolarPanels;
+    @FXML
+    private TextField totalNrOfPanels;
     @FXML
     private ChoiceBox<Customer> customerEmailSelector;
     @FXML
@@ -99,7 +102,7 @@ public class CalculatorPage {
             while (resultSet.next()) {
                 String email = resultSet.getString("email");
                 int phoneNumber = resultSet.getInt("phonenumber"); // Get the phone number from the result set
-                Customer customer = new Customer(email,phoneNumber);
+                Customer customer = new Customer(email, phoneNumber);
                 data.add(customer);
             }
 
@@ -139,8 +142,8 @@ public class CalculatorPage {
 
     @FXML
     public void initialize() {
-ObservableList<Customer> customerObservableList = observableListCustomerEmails();
-customerEmailSelector.setItems(customerObservableList);
+        ObservableList<Customer> customerObservableList = observableListCustomerEmails();
+        customerEmailSelector.setItems(customerObservableList);
         ObservableList<SolarPanel> solarPanelList = observableListSolarpanel();
         zonnepaneelselector.setItems(solarPanelList);
 
@@ -175,9 +178,9 @@ customerEmailSelector.setItems(customerObservableList);
         System.out.println(totalNumberOfSolarPanels);
 
 //        if (totalNumberOfSolarPanels != null) {
-            Double totalYieldValue = opbrengst * verliesfactor * 0.85 * totalNumberOfSolarPanels;
-            totalYield.setText(totalYieldValue.toString());
-            fase3.setSelected(totalYieldValue > 6000);
+        Double totalYieldValue = opbrengst * verliesfactor * 0.85 * totalNumberOfSolarPanels;
+        totalYield.setText(totalYieldValue.toString());
+        fase3.setSelected(totalYieldValue > 6000);
 
 //        }
 
@@ -195,7 +198,7 @@ customerEmailSelector.setItems(customerObservableList);
         Customer customer = customerEmailSelector.getSelectionModel().getSelectedItem();
         SolarPanel selectedPanel = zonnepaneelselector.getSelectionModel().getSelectedItem();
         Omvormer selectedOmvormer = omvormer.getSelectionModel().getSelectedItem();
-        int total= (int) Math.round(totalNumberOfSolarPanels);
+        int total= totalNumberOfSolarPanels;
 
         String insertOfferSql = "INSERT INTO offer(phonenumber, zonnepaneel_id, quantity_zonnepaneel, omvormer) VALUES(?, ?, ?, ?)";
 
@@ -241,6 +244,16 @@ customerEmailSelector.setItems(customerObservableList);
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+    }
+
+    public void onTotalPriceButtonPressed(ActionEvent event) {
+        SolarPanel selectedPanel = zonnepaneelselector.getSelectionModel().getSelectedItem();
+        Omvormer selectedOmvormer = omvormer.getSelectionModel().getSelectedItem();
+        double totalPriceInclBTW = (selectedPanel.getPrice()* Double.parseDouble(totalNrOfPanels.getText())) + selectedOmvormer.getPrice() + 1000
+                + (Double.parseDouble(totalNrOfPanels.getText()) * 50);
+
+
+        totalCost.setText("€" + totalPriceInclBTW);
     }
 }
 

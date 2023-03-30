@@ -31,4 +31,7 @@ class Omvormer {
         return maxCapacity;
     }
 
+    public double getPrice() {
+       return price;
+    }
 }
