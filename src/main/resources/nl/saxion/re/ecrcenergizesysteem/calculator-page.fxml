@@ -44,7 +44,7 @@
       <Label layoutX="285.0" layoutY="349.0" text="Type omvormer" />
       <ChoiceBox fx:id="omvormer" layoutX="285.0" layoutY="366.0" prefHeight="26.0" prefWidth="150.0" />
       <Text layoutX="440.0" layoutY="384.0" strokeType="OUTSIDE" strokeWidth="0.0" text="+" textAlignment="CENTER" wrappingWidth="8.536771774291992" />
-      <CheckBox fx:id="fase3" layoutX="451.0" layoutY="370.0" mnemonicParsing="false" text="Fase 3 aansluiting " />
+      <CheckBox fx:id="getFase3" layoutX="451.0" layoutY="370.0" mnemonicParsing="false" text="Fase 3 aansluiting " />
       <Text layoutX="571.0" layoutY="384.0" strokeType="OUTSIDE" strokeWidth="0.0" text="=" textAlignment="CENTER" wrappingWidth="17.600024414062318" />
       <Label layoutX="596.0" layoutY="349.0" text="Totale kosten" />
       <Label fx:id="totalCost" layoutX="594.0" layoutY="365.0" prefHeight="26.0" prefWidth="120.0" />
