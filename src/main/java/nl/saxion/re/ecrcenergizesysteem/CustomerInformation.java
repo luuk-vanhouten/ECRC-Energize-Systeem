@@ -54,16 +54,6 @@ public class CustomerInformation {
         connection = Postgres.ConnectionUtil.connectdb();
     }
 
-
-    @FXML
-    public void switchToSceneMenuPage(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("menu-option.fxml"));
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
-
     @FXML
     public void switchToSceneCalculatorPage(ActionEvent event) throws IOException {
         saveCustomerInDatabase(event); // save the customer before switching to calculator page
@@ -110,6 +100,15 @@ public class CustomerInformation {
     @FXML
     public void switchToSceneLoginPage(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("login-page.fxml"));
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    @FXML
+    public void switchToSceneMenuPage(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("menu-option.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);

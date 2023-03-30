@@ -191,5 +191,14 @@ public class CalculatorPage {
         stage.setScene(scene);
         stage.show();
     }
+
+    @FXML
+    public void switchToSceneMenuPage(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("menu-option.fxml"));
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
 }
 
