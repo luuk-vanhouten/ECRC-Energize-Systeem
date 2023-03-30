@@ -4,21 +4,21 @@ public class Customer {
 
     private String firstName;
     private String lastName;
-    private String email;
+    private String emailadress;
     private int phoneNumber;
     private int houseNumber;
     private String postalCode;
     private String streetName;
 
-    public Customer(String email, int phoneNumber) {
-        this.email = email;
+    public Customer(String emailadress, int phoneNumber) {
+        this.emailadress = emailadress;
         this.phoneNumber = phoneNumber;
     }
 
-    public Customer(String firstName, String lastName, String email, int phoneNumber, int houseNumber, String postalCode, String streetName) {
+    public Customer(String firstName, String lastName, String emailadress, int phoneNumber, int houseNumber, String postalCode, String streetName) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.email = email;
+        this.emailadress = emailadress;
         this.phoneNumber = phoneNumber;
         this.houseNumber = houseNumber;
         this.postalCode = postalCode;
@@ -33,8 +33,8 @@ public class Customer {
         return lastName;
     }
 
-    public String getEmail() {
-        return email;
+    public String getEmailadress() {
+        return emailadress;
     }
 
     public int getPhoneNumber() {

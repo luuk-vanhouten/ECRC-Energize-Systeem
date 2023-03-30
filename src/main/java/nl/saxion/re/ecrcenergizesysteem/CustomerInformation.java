@@ -35,7 +35,7 @@ public class CustomerInformation {
     @FXML
     private TextField phoneNumber;
     @FXML
-    private TextField emailAdress;
+    private TextField emailadress;
     @FXML
     private Button exit;
     @FXML
@@ -71,7 +71,7 @@ public class CustomerInformation {
 public ObservableList<Customer> saveCustomerInDatabase(ActionEvent event) throws IOException {
     String firstname = firstName.getText();
     String lastname = lastName.getText();
-    String emailadress = emailAdress.getText();
+    String emailadres = emailadress.getText();
     int phonenumber = Integer.parseInt(phoneNumber.getText());
     String streetname = streetName.getText();
     int housenumber = Integer.parseInt(houseNumber.getText());
@@ -84,7 +84,7 @@ public ObservableList<Customer> saveCustomerInDatabase(ActionEvent event) throws
     try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
         preparedStatement.setString(1, firstname);
         preparedStatement.setString(2, lastname);
-        preparedStatement.setString(3, emailadress);
+        preparedStatement.setString(3, emailadres);
         preparedStatement.setInt(4, phonenumber);
         preparedStatement.setInt(5, housenumber);
         preparedStatement.setString(6, postalcode);
@@ -95,12 +95,12 @@ public ObservableList<Customer> saveCustomerInDatabase(ActionEvent event) throws
         while (resultSet.next()) {
             String firstName = resultSet.getString("firstname");
             String lastName = resultSet.getString("lastname");
-            String email = resultSet.getString("email");
+            String emailAdress = resultSet.getString("email");
             int phoneNumber = resultSet.getInt("phonenumber");
             int houseNumber = resultSet.getInt("housenumber");
             String postalCode = resultSet.getString("postalcode");
             String streetName = resultSet.getString("streetname");
-            Customer customer = new Customer(firstName, lastName, email, phoneNumber, houseNumber, postalCode, streetName);
+            Customer customer = new Customer(firstName, lastName, emailAdress, phoneNumber, houseNumber, postalCode, streetName);
             customerList.add(customer);
         }
 
