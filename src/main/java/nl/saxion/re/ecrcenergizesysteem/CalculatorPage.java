@@ -55,6 +55,9 @@ public class CalculatorPage {
     private Scene scene;
     @FXML
     private CheckBox fase3;
+    @FXML
+    private CheckBox getFase3;
+
 
 
     public CalculatorPage() {
@@ -177,7 +180,7 @@ customerEmailSelector.setItems(customerObservableList);
 //        if (totalNumberOfSolarPanels != null) {
             Double totalYieldValue = opbrengst * verliesfactor * 0.85 * totalNumberOfSolarPanels;
             totalYield.setText(totalYieldValue.toString());
-            fase3.setSelected(totalYieldValue > 6000);
+            getFase3.setSelected(totalYieldValue > 6000);
 
 //        }
 
@@ -195,9 +198,10 @@ customerEmailSelector.setItems(customerObservableList);
         Customer customer = customerEmailSelector.getSelectionModel().getSelectedItem();
         SolarPanel selectedPanel = zonnepaneelselector.getSelectionModel().getSelectedItem();
         Omvormer selectedOmvormer = omvormer.getSelectionModel().getSelectedItem();
-        int total= (int) Math.round(totalNumberOfSolarPanels);
+        Boolean fase3= getFase3.isSelected();
+        int total= totalNumberOfSolarPanels;
 
-        String insertOfferSql = "INSERT INTO offer(phonenumber, zonnepaneel_id, quantity_zonnepaneel, omvormer) VALUES(?, ?, ?, ?)";
+        String insertOfferSql = "INSERT INTO offer(phonenumber, zonnepaneel_id, quantity_zonnepaneel, omvormer_id, fase3) VALUES(?, ?, ?, ?,?)";
 
         try {
             preparedStatement = connection.prepareStatement(insertOfferSql);
@@ -205,6 +209,7 @@ customerEmailSelector.setItems(customerObservableList);
             preparedStatement.setInt(2, selectedPanel.getId());
             preparedStatement.setInt(3, total);
             preparedStatement.setInt(4, selectedOmvormer.getId());
+            preparedStatement.setBoolean(5,fase3);
 
             int rowsAffected = preparedStatement.executeUpdate();
             if (rowsAffected > 0) {
