@@ -20,13 +20,10 @@ import javafx.stage.Stage;
 public class LoginPage implements Initializable {
     @FXML
     private TextField userName;
-
     @FXML
     private PasswordField textPassword;
-
     Stage dialogStage = new Stage();
     Scene scene;
-
     Connection connection = null;
     PreparedStatement preparedStatement = null;
     ResultSet resultSet = null;
@@ -52,7 +49,7 @@ public class LoginPage implements Initializable {
             preparedStatement.setString(2, password);
             resultSet = preparedStatement.executeQuery();
             if(!resultSet.next()){
-                infoBox("mislukt, probeer opnieuw in te loggen", null, "Fout");
+                infoBox("Mislukt, probeer opnieuw in te loggen", null, "Fout");
             }else{
                 infoBox("Login gelukt",null,"Gelukt" );
                 Node node = (Node)event.getSource();

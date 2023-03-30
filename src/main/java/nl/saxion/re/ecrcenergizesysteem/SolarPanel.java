@@ -3,12 +3,12 @@ package nl.saxion.re.ecrcenergizesysteem;
 public class SolarPanel {
     private String name;
     private double price;
-    private int length;
-    private int width;
+    private double length;
+    private double width;
     private int id;
     private int opbrengst;
 
-    public SolarPanel(String name, double price, int length, int width, int id, int opbrengst) {
+    public SolarPanel(String name, double price, double length, double width, int id, int opbrengst) {
         this.name = name;
         this.price = price;
         this.length = length;
@@ -25,11 +25,11 @@ public class SolarPanel {
         return price;
     }
 
-    public int getLength() {
+    public double getLength() {
         return length;
     }
 
-    public int getWidth() {
+    public double getWidth() {
         return width;
     }
 

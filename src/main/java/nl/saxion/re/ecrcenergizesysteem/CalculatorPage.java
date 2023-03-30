@@ -36,7 +36,7 @@ public class CalculatorPage {
     @FXML
     private Label totalYield;
 
-    private Double totalNumberOfSolarPanels;
+    private int totalNumberOfSolarPanels;
     @FXML
     private ChoiceBox<Customer> customerEmailSelector;
     @FXML
@@ -151,18 +151,18 @@ customerEmailSelector.setItems(customerObservableList);
     @FXML
     void onCalculateButtonPressed() throws SQLException {
         SolarPanel selectedPanel = zonnepaneelselector.getSelectionModel().getSelectedItem();
-        int length = selectedPanel.getLength();
-        int width = selectedPanel.getWidth();
+        double length = selectedPanel.getLength();
+        double width = (selectedPanel.getWidth());
 
-        Double i = (Math.floor(Double.parseDouble(widthCalculator.getText()) / width) * Math.floor(Double.parseDouble(lengthCalculator.getText()) / length));
-        Double j = (Math.floor(Double.parseDouble(widthCalculator.getText()) / length) * Math.floor(Double.parseDouble(lengthCalculator.getText()) / width));
+        double i = (Math.floor(Double.parseDouble(widthCalculator.getText()) / width) * Math.floor(Double.parseDouble(lengthCalculator.getText()) / length));
+        double j = (Math.floor(Double.parseDouble(widthCalculator.getText()) / length) * Math.floor(Double.parseDouble(lengthCalculator.getText()) / width));
 
         if (i > j) {
-            totalNumberOfSolarPanels = Double.valueOf(i.intValue());
-            answer.setText(i + " landscape");
+            totalNumberOfSolarPanels = (int) i;
+            answer.setText((int) i + " landscape");
         } else {
-            totalNumberOfSolarPanels = Double.valueOf(j.intValue());
-            answer.setText(j + " portrait");
+            totalNumberOfSolarPanels = (int) j;
+            answer.setText((int) j + " portrait");
         }
         System.out.println(totalNumberOfSolarPanels);
     }
@@ -174,12 +174,12 @@ customerEmailSelector.setItems(customerObservableList);
         double verliesfactor = Double.parseDouble(opbrengstverlies.getText());
         System.out.println(totalNumberOfSolarPanels);
 
-        if (totalNumberOfSolarPanels != null) {
+//        if (totalNumberOfSolarPanels != null) {
             Double totalYieldValue = opbrengst * verliesfactor * 0.85 * totalNumberOfSolarPanels;
             totalYield.setText(totalYieldValue.toString());
             fase3.setSelected(totalYieldValue > 6000);
 
-        }
+//        }
 
     }
 
@@ -191,7 +191,7 @@ customerEmailSelector.setItems(customerObservableList);
         stage.show();
     }
 
-    public void onFinishButtonPressed(ActionEvent actionEvent) {
+    public void onFinishButtonPressed(ActionEvent event) {
         Customer customer = customerEmailSelector.getSelectionModel().getSelectedItem();
         SolarPanel selectedPanel = zonnepaneelselector.getSelectionModel().getSelectedItem();
         Omvormer selectedOmvormer = omvormer.getSelectionModel().getSelectedItem();
@@ -209,11 +209,18 @@ customerEmailSelector.setItems(customerObservableList);
             int rowsAffected = preparedStatement.executeUpdate();
             if (rowsAffected > 0) {
                 System.out.println("Offer saved successfully.");
+                Parent root = FXMLLoader.load(getClass().getResource("menu-option.fxml"));
+                stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                scene = new Scene(root);
+                stage.setScene(scene);
+                stage.show();
             } else {
                 System.out.println("Failed to save the offer.");
             }
         } catch (SQLException ex) {
             Logger.getLogger(CalculatorPage.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
