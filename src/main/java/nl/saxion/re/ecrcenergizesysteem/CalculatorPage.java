@@ -247,5 +247,17 @@ customerEmailSelector.setItems(customerObservableList);
         stage.setScene(scene);
         stage.show();
     }
+
+    public void onTotalPriceButtonPressed(ActionEvent event) {
+        SolarPanel selectedPanel = zonnepaneelselector.getSelectionModel().getSelectedItem();
+        Omvormer selectedOmvormer = omvormer.getSelectionModel().getSelectedItem();
+        double totalPriceInclBTW = (selectedPanel.getPrice()* Double.parseDouble(totalNrOfPanels.getText())) + selectedOmvormer.getPrice() + 1000
+                + (Double.parseDouble(totalNrOfPanels.getText()) * 50);
+
+
+        totalCost.setText("€" + totalPriceInclBTW);
+    }
+}
+
 }
 
