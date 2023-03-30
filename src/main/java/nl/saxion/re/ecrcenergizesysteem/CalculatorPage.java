@@ -248,6 +248,7 @@ customerEmailSelector.setItems(customerObservableList);
         stage.show();
     }
 
+
     public void onTotalPriceButtonPressed(ActionEvent event) {
         SolarPanel selectedPanel = zonnepaneelselector.getSelectionModel().getSelectedItem();
         Omvormer selectedOmvormer = omvormer.getSelectionModel().getSelectedItem();
