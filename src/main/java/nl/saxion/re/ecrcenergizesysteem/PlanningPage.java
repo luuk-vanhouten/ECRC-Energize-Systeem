@@ -8,40 +8,41 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.*;
-import java.time.LocalDate;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class PlanningPage {
 
-    @FXML
-    private TextField inputField;
-    @FXML
-    private Button addDatumButton;
-    @FXML
-    private TableView<Offer> dataTable;
-    @FXML
-    private TableColumn<Offer, Integer> idColumn;
-    @FXML
-    private TableColumn<Offer, String> groupColumn;
-    @FXML
-    private TableColumn<Offer, String> datumColumn;
-    @FXML
-    private TableColumn<Offer, LocalDate> dateColumn;
+    public void setParentController(Fullplanning parentController) {
+        this.parentController = parentController;
+    }
+
 
     private ObservableList<Offer> data = FXCollections.observableArrayList();
+    private ObservableList<Integer> teams=FXCollections.observableArrayList(1,2,3);
 
-    @FXML
-    private ChoiceBox<String> teamChoice;
-    @FXML
-    private ComboBox<Integer> groupSelector;
+    private Fullplanning parentController;
+
     @FXML
     private Stage stage;
     @FXML
     private Scene scene;
+    @FXML
+    private ComboBox<Offer> offerSelector;
+
+    @FXML
+    private DatePicker datePicker;
+
+    @FXML
+    private ChoiceBox<Integer> teamSelector;
+
 
     @FXML
     Parent root;
@@ -62,65 +63,96 @@ public class PlanningPage {
         stage.setScene(scene);
         stage.show();
     }
-//    @FXML
-//    private void handleAddDatum(ActionEvent event) {
-//        Integer group = groupSelector.getSelectionModel().getSelectedItem();
-//        String datum = inputField.getText().trim();
-//        LocalDate today = LocalDate.now();
-//        String query = "INSERT INTO data (group_name, datum, date) VALUES (?, ?, ?)";
-//
-//        if (group != null && !datum.isEmpty()) {
-//            if (canAddDatum(group, today)) {
-//                try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-//                    preparedStatement.setInt(1, group);
-//                    preparedStatement.setString(2, datum);
-//                    preparedStatement.setObject(3, today);
-//                    preparedStatement.executeUpdate();
-//                } catch (SQLException e) {
-//                    e.printStackTrace();
-//                }
-//                loadData();
-//            } else {
-//                System.out.println("You have already added a datum for this group today.");
-//            }
-//        }
-//        inputField.clear();
-//    }
-//    private boolean canAddDatum(String group, LocalDate date) {
-//        String query = "SELECT COUNT(*) FROM data WHERE group_name = ? AND date = ?";
-//        try (Connection conn = DatabaseConnection.connect()) {
-//            PreparedStatement stmt = conn.prepareStatement(query);
-//            stmt.setString(1, group);
-//            stmt.setObject(2, date);
-//            ResultSet rs = stmt.executeQuery();
-//            if (rs.next()) {
-//                int count = rs.getInt(1);
-//                return count == 0;
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//        return false;
-//    }
-
-//    private void loadData() {
-//        data.clear();
-//        String query = "SELECT * FROM data";
-//        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-//            ResultSet rs = preparedStatement.executeQuery(query);
-//            while (rs.next()) {
-//                int id = rs.getInt("offerid");
-//                int team = rs.getInt("group_name");
-//                String datum = rs.getString("datum");
-//                LocalDate date = rs.getObject("date", LocalDate.class);
-//                data.add(new Offer(id, team, datum, date));
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//    }
-
     @FXML
+    public void initialize() {
+        ObservableList<Offer> offers = fetchOffers();
+        offerSelector.setItems(offers);
+        teamSelector.setItems(teams);
+          }
+
+
+
+    private ObservableList<Offer> fetchOffers() {
+        String sql = "SELECT * FROM offer WHERE installation_date IS NULL AND team IS NULL";
+
+        ObservableList<Offer> offers = FXCollections.observableArrayList();
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                int offerId = resultSet.getInt("offer_id");
+                // Fetch other columns, if needed
+                // ...
+
+                Offer offer = new Offer(offerId);
+                offers.add(offer);
+            }
+        } catch (SQLException ex) {
+            Logger logger = Logger.getLogger(PlanningPage.class.getName());
+            logger.log(Level.SEVERE, ex.getMessage(), ex);
+        }
+
+        return offers;
+    }
+    private void refreshOfferSelector() {
+        ObservableList<Offer> offers = fetchOffers();
+        offerSelector.setItems(offers);
+    }
+    @FXML
+    void onSaveButtonPressed(ActionEvent event) {
+        Offer selectedOffer = offerSelector.getSelectionModel().getSelectedItem();
+
+        if (selectedOffer == null) {
+            System.out.println("No offer selected.");
+            return;
+        }
+
+        Date selectedDate = Date.valueOf(datePicker.getValue());
+        int team = teamSelector.getValue();
+
+        String checkTeamAvailabilitySql = "SELECT COUNT(*) FROM offer WHERE installation_date = ? AND team = ?";
+        try (PreparedStatement checkTeamAvailabilityStmt = connection.prepareStatement(checkTeamAvailabilitySql)) {
+            checkTeamAvailabilityStmt.setObject(1, selectedDate);
+            checkTeamAvailabilityStmt.setInt(2, team);
+
+            ResultSet resultSet = checkTeamAvailabilityStmt.executeQuery();
+
+            if (resultSet.next() && resultSet.getInt(1) > 0) {
+                System.out.println("The selected team is already assigned to an offer on this date.");
+                return;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PlanningPage.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        // Update the existing offer with the selected date and team
+        String updateOfferSql = "UPDATE offer SET installation_date = ?, team = ? WHERE offer_id = ?";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(updateOfferSql)) {
+            preparedStatement.setObject(1, selectedDate);
+            preparedStatement.setInt(2, team);
+            preparedStatement.setInt(3, selectedOffer.getOffer_id());
+
+            int rowsAffected = preparedStatement.executeUpdate();
+
+
+            if (rowsAffected > 0) {
+                System.out.println("Offer updated successfully.");
+                refreshOfferSelector(); // Refresh the offer selector after updating the offer
+                ((Node) event.getSource()).getScene().getWindow().hide(); // Close the window
+            } else {
+                System.out.println("Failed to update the offer.");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PlanningPage.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+
+
+        @FXML
     public void switchToSceneLoginPage(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("login-page.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
