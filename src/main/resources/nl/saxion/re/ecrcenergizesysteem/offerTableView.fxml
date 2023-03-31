@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.saxion.re.ecrcenergizesysteem.OfferTableView">
+    <TableView fx:id="offerTableView">
+        <columns>
+            <TableColumn fx:id="firstNameColumn" text="First Name" />
+            <TableColumn fx:id="lastNameColumn" text="Last Name" />
+            <TableColumn fx:id="postalCodeColumn" text="Postal Code" />
+            <TableColumn fx:id="phoneNumberColumn" prefWidth="112.0" text="Phone Number" />
+            <TableColumn fx:id="solarPanelNameColumn" prefWidth="144.0" text="Solar Panel Name" />
+         <TableColumn fx:id="quantity_zonnepaneel" prefWidth="144.0" text="Solar Panel aantal" />
+            <TableColumn fx:id="inverterNameColumn" prefWidth="152.79998779296875" text="Inverter Name" />
+            <TableColumn fx:id="totalPriceColumn" prefWidth="151.2000732421875" text="Total Price" />
+        </columns>
+    </TableView>
+
+</AnchorPane>

@@ -10,7 +10,7 @@ public class HelloApplication extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("menu-option.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("offerTableView.fxml"));
         Scene scene = new Scene(loader.load());
         primaryStage.setScene(scene);
         primaryStage.show();

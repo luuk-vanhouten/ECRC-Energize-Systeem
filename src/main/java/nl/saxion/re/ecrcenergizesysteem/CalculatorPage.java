@@ -35,6 +35,7 @@ public class CalculatorPage {
     private Label answer;
     @FXML
     private Label totalYield;
+    @FXML Label totalCost;
 
     private int totalNumberOfSolarPanels;
     @FXML
@@ -43,6 +44,8 @@ public class CalculatorPage {
     ChoiceBox<Omvormer> omvormer;
     @FXML
     ChoiceBox<SolarPanel> zonnepaneelselector;
+    @FXML
+    TextField totalNrOfPanels;
     @FXML
     TextField lengthCalculator;
     @FXML
@@ -198,34 +201,63 @@ customerEmailSelector.setItems(customerObservableList);
         Customer customer = customerEmailSelector.getSelectionModel().getSelectedItem();
         SolarPanel selectedPanel = zonnepaneelselector.getSelectionModel().getSelectedItem();
         Omvormer selectedOmvormer = omvormer.getSelectionModel().getSelectedItem();
-        Boolean fase3= getFase3.isSelected();
-        int total= totalNumberOfSolarPanels;
+        Boolean fase3 = getFase3.isSelected();
+        int total = totalNumberOfSolarPanels;
 
         String insertOfferSql = "INSERT INTO offer(phonenumber, zonnepaneel_id, quantity_zonnepaneel, omvormer_id, fase3) VALUES(?, ?, ?, ?,?)";
+        String updateStockSql = "UPDATE zonnepaneel SET stock = stock - ? WHERE zonnepaneel_id = ?";
 
         try {
+            connection.setAutoCommit(false);
+
             preparedStatement = connection.prepareStatement(insertOfferSql);
-            preparedStatement.setInt(1, customer.getPhoneNumber()); // Make sure this value exists in the "customer" table
+            preparedStatement.setInt(1, customer.getPhoneNumber());
             preparedStatement.setInt(2, selectedPanel.getId());
             preparedStatement.setInt(3, total);
             preparedStatement.setInt(4, selectedOmvormer.getId());
-            preparedStatement.setBoolean(5,fase3);
+            preparedStatement.setBoolean(5, fase3);
 
             int rowsAffected = preparedStatement.executeUpdate();
+
             if (rowsAffected > 0) {
-                System.out.println("Offer saved successfully.");
-                Parent root = FXMLLoader.load(getClass().getResource("menu-option.fxml"));
-                stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                scene = new Scene(root);
-                stage.setScene(scene);
-                stage.show();
+                preparedStatement = connection.prepareStatement(updateStockSql);
+                preparedStatement.setInt(1, total);
+                preparedStatement.setInt(2, selectedPanel.getId());
+
+                rowsAffected = preparedStatement.executeUpdate();
+
+                if (rowsAffected > 0) {
+                    connection.commit();
+                    System.out.println("Offer saved successfully, and stock updated.");
+
+                    Parent root = FXMLLoader.load(getClass().getResource("menu-option.fxml"));
+                    stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                    scene = new Scene(root);
+                    stage.setScene(scene);
+                    stage.show();
+                } else {
+                    connection.rollback();
+                    System.out.println("Failed to update stock.");
+                }
             } else {
+                connection.rollback();
                 System.out.println("Failed to save the offer.");
             }
         } catch (SQLException ex) {
+            try {
+                connection.rollback();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
             Logger.getLogger(CalculatorPage.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException e) {
             throw new RuntimeException(e);
+        } finally {
+            try {
+                connection.setAutoCommit(true);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -260,5 +292,5 @@ customerEmailSelector.setItems(customerObservableList);
     }
 }
 
-}
+
 
