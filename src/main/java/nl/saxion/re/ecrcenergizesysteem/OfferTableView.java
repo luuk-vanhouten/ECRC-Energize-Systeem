@@ -22,8 +22,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class OfferTableView {
+
     @FXML
     private TableView<OfferTableData> offerTableView;
+    @FXML
+    private TableColumn<OfferTableData, Integer> offerIdColumn;
     @FXML
     private TableColumn<OfferTableData, String> firstNameColumn;
     @FXML
@@ -47,6 +50,7 @@ public class OfferTableView {
 
 
     public void initialize() {
+        offerIdColumn.setCellValueFactory(new PropertyValueFactory<>("offerId"));
         firstNameColumn.setCellValueFactory(new PropertyValueFactory<>("firstName"));
         lastNameColumn.setCellValueFactory(new PropertyValueFactory<>("lastName"));
         postalCodeColumn.setCellValueFactory(new PropertyValueFactory<>("postalCode"));
@@ -60,7 +64,7 @@ public class OfferTableView {
     }
 
     private void loadOfferTableData() {
-        String query = "SELECT c.firstname, c.lastname, c.postalcode, c.phonenumber, z.product_name, o.quantity_zonnepaneel, o.omvormer_id, o.total_price, om.name " +
+        String query = "SELECT o.offer_id, c.firstname, c.lastname, c.postalcode, c.phonenumber, z.product_name, o.quantity_zonnepaneel, o.omvormer_id, o.total_price, om.name " +
                 "FROM offer o " +
                 "JOIN customer c ON c.phonenumber = o.phonenumber " +
                 "JOIN zonnepaneel z ON z.zonnepaneel_id = o.zonnepaneel_id " + "JOIN omvormer om ON om.omvormer_id = o.omvormer_id";
@@ -71,6 +75,7 @@ public class OfferTableView {
              ResultSet resultSet = preparedStatement.executeQuery()) {
 
             while (resultSet.next()) {
+                int offerId = resultSet.getInt("offer_id");
                 String firstName = resultSet.getString("firstname");
                 String lastName = resultSet.getString("lastname");
                 String postalCode = resultSet.getString("postalcode");
@@ -80,7 +85,7 @@ public class OfferTableView {
                 int quantity_zonnepaneel = resultSet.getInt("quantity_zonnepaneel");
                 double totalPrice = resultSet.getDouble("total_price");
 
-                OfferTableData offerTableData = new OfferTableData(firstName, lastName, postalCode, phoneNumber, solarPanelName, inverterName, totalPrice, quantity_zonnepaneel);
+                OfferTableData offerTableData = new OfferTableData(offerId, firstName, lastName, postalCode, phoneNumber, solarPanelName, inverterName, totalPrice, quantity_zonnepaneel);
                 offerTableDataList.add(offerTableData);
             }
         } catch (SQLException ex) {

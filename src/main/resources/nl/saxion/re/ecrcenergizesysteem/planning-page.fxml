@@ -4,13 +4,17 @@
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="800.0" minHeight="-Infinity" minWidth="400.0" prefHeight="100.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.saxion.re.ecrcenergizesysteem.PlanningPage">
+<AnchorPane maxHeight="-Infinity" maxWidth="800.0" minHeight="-Infinity" minWidth="400.0" prefHeight="200.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.saxion.re.ecrcenergizesysteem.PlanningPage">
     <children>
-      <DatePicker fx:id="datePicker" layoutX="110.0" layoutY="19.0" />
-      <ChoiceBox fx:id="teamSelector" layoutX="366.0" layoutY="19.0" prefWidth="150.0" />
-      <Button layoutX="629.0" layoutY="60.0" mnemonicParsing="false" onAction="#onSaveButtonPressed" text="save" />
-      <ComboBox fx:id="offerSelector" layoutX="565.0" layoutY="19.0" prefWidth="150.0" />
+      <DatePicker fx:id="datePicker" layoutX="98.0" layoutY="87.0" />
+      <ChoiceBox fx:id="teamSelector" layoutX="325.0" layoutY="87.0" prefWidth="150.0" />
+      <Button layoutX="370.0" layoutY="160.0" mnemonicParsing="false" onAction="#onSaveButtonPressed" text="Opslaan" />
+      <ComboBox fx:id="offerSelector" layoutX="543.0" layoutY="87.0" prefWidth="150.0" />
+      <Label layoutX="105.0" layoutY="70.0" text="Datum" />
+      <Label layoutX="333.0" layoutY="70.0" text="Installatie team" />
+      <Label layoutX="550.0" layoutY="70.0" text="Order ID" />
     </children>
 </AnchorPane>

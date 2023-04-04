@@ -52,4 +52,9 @@ public class Customer {
     public String getStreetName() {
         return streetName;
     }
+
+    @Override
+    public String toString() {
+        return getEmailadress();
+    }
 }

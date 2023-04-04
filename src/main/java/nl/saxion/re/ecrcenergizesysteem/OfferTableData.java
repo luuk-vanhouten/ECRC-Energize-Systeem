@@ -1,6 +1,7 @@
 package nl.saxion.re.ecrcenergizesysteem;
 
 public class OfferTableData {
+    private int offerId;
     private String firstName;
     private String lastName;
     private String postalCode;
@@ -10,8 +11,9 @@ public class OfferTableData {
     private double totalPrice;
     private int quantity_zonnepaneel;
 
-    public OfferTableData(String firstName, String lastName, String postalCode, String phoneNumber,
+    public OfferTableData(int offerId, String firstName, String lastName, String postalCode, String phoneNumber,
                           String solarPanelName, String inverterName, double totalPrice,int quantity_zonnepaneel ) {
+        this.offerId = offerId;
         this.firstName = firstName;
         this.quantity_zonnepaneel=quantity_zonnepaneel;
         this.lastName = lastName;
@@ -20,6 +22,10 @@ public class OfferTableData {
         this.solarPanelName = solarPanelName;
         this.inverterName = inverterName;
         this.totalPrice = totalPrice;
+    }
+
+    public int getOfferId() {
+        return offerId;
     }
 
     public String getFirstName() {
