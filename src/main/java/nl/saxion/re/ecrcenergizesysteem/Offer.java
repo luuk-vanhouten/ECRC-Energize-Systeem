@@ -30,4 +30,9 @@ public class Offer {
     public int getTeam() {
         return team;
     }
+
+    @Override
+    public String toString() {
+        return String.valueOf(getOffer_id());
+    }
 }

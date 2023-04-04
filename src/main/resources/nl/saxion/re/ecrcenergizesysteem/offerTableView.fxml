@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
 
-<AnchorPane maxWidth="800.0" minWidth="800.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.saxion.re.ecrcenergizesysteem.OfferTableView">
+<AnchorPane maxWidth="800.0" minWidth="800.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.saxion.re.ecrcenergizesysteem.OfferTableView">
     <children>
         <Rectangle fill="WHITE" height="210.0" layoutX="-9.0" layoutY="-18.0" stroke="TRANSPARENT" strokeType="INSIDE" width="833.0" />
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#d9d9d9" height="443.0" layoutY="112.0" smooth="false" stroke="TRANSPARENT" strokeType="INSIDE" width="825.0" />
@@ -20,14 +17,15 @@
         </ImageView>
         <TableView fx:id="offerTableView" layoutX="7.0" layoutY="120.0" prefHeight="375.0" prefWidth="787.0">
             <columns>
-                <TableColumn fx:id="firstNameColumn" prefWidth="90.39999198913574" text="First Name" />
-                <TableColumn fx:id="lastNameColumn" prefWidth="82.4000015258789" text="Last Name" />
-                <TableColumn fx:id="postalCodeColumn" prefWidth="80.79998779296875" text="Postal Code" />
-                <TableColumn fx:id="phoneNumberColumn" prefWidth="109.5999755859375" text="Phone Number" />
-                <TableColumn fx:id="solarPanelNameColumn" prefWidth="113.5999755859375" text="Solar Panel Name" />
-                <TableColumn fx:id="quantity_zonnepaneel" prefWidth="115.99996948242188" text="Solar Panel aantal" />
-                <TableColumn fx:id="inverterNameColumn" prefWidth="90.4000244140625" text="Inverter Name" />
-                <TableColumn fx:id="totalPriceColumn" prefWidth="98.4000244140625" text="Total Price" />
+            <TableColumn fx:id="offerIdColumn" prefWidth="63.999972343444824" text="Order ID" />
+                <TableColumn fx:id="firstNameColumn" prefWidth="75.199951171875" text="First Name" />
+                <TableColumn fx:id="lastNameColumn" prefWidth="106.39996337890625" text="Last Name" />
+                <TableColumn fx:id="postalCodeColumn" prefWidth="79.19999694824219" text="Postal Code" />
+                <TableColumn fx:id="phoneNumberColumn" prefWidth="110.39996337890625" text="Phone Number" />
+                <TableColumn fx:id="solarPanelNameColumn" prefWidth="120.79998779296875" text="Solar Panel Name" />
+                <TableColumn fx:id="quantity_zonnepaneel" prefWidth="111.2000732421875" text="Solar Panel aantal" />
+                <TableColumn fx:id="inverterNameColumn" prefWidth="89.5999755859375" text="Inverter Name" />
+                <TableColumn fx:id="totalPriceColumn" prefWidth="121.5999755859375" text="Total Price" />
             </columns>
         </TableView>
       <Button layoutX="14.0" layoutY="559.0" mnemonicParsing="false" onAction="#switchToSceneMenuPage" prefHeight="26.0" prefWidth="69.0" text="Menu" />
