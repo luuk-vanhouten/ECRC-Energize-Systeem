@@ -1,13 +1,12 @@
 package nl.saxion.re.ecrcenergizesysteem;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -56,61 +55,94 @@ public class CustomerInformation {
 
     @FXML
     public void switchToSceneCalculatorPage(ActionEvent event) throws IOException {
-        saveCustomerInDatabase(event); // save the customer before switching to calculator page
-        Parent root = FXMLLoader.load(getClass().getResource("calculator-page.fxml"));
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        if (saveCustomerInDatabase(event)) {
+            Parent root = FXMLLoader.load(getClass().getResource("calculator-page.fxml"));
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        }
     }
-
     //
     @FXML
-    public ObservableList<Customer> saveCustomerInDatabase(ActionEvent event) throws IOException {
+    public boolean saveCustomerInDatabase(ActionEvent event) throws IOException {
         String firstname = firstName.getText();
         String lastname = lastName.getText();
         String emailadres = emailadress.getText();
-        int phonenumber = Integer.parseInt(phoneNumber.getText());
+        String phonenumber = phoneNumber.getText();
         String streetname = streetName.getText();
-        int housenumber = Integer.parseInt(houseNumber.getText());
+        String housenumber = houseNumber.getText();
         String postalcode = postalCode.getText();
 
-        String sql = "INSERT INTO customer(firstname, lastname, email, phonenumber, housenumber, postalcode, streetname) VALUES(?, ?, ?, ?, ?, ?, ?) RETURNING *";
+        if (!validateInput(firstname, lastname, emailadres, phonenumber, housenumber, postalcode, streetname)) {
+            return false;
+        }
 
-        ObservableList<Customer> customerList = FXCollections.observableArrayList();
+        int phoneNumberInt = Integer.parseInt(phonenumber);
+        int houseNumberInt = Integer.parseInt(housenumber);
+
+        String sql = "INSERT INTO customer(firstname, lastname, email, phonenumber, housenumber, postalcode, streetname) VALUES(?, ?, ?, ?, ?, ?, ?) RETURNING *";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, firstname);
             preparedStatement.setString(2, lastname);
             preparedStatement.setString(3, emailadres);
-            preparedStatement.setInt(4, phonenumber);
-            preparedStatement.setInt(5, housenumber);
+            preparedStatement.setInt(4, phoneNumberInt);
+            preparedStatement.setInt(5, houseNumberInt);
             preparedStatement.setString(6, postalcode);
             preparedStatement.setString(7, streetname);
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
-            while (resultSet.next()) {
-                String firstName = resultSet.getString("firstname");
-                String lastName = resultSet.getString("lastname");
-                String emailAdress = resultSet.getString("email");
-                int phoneNumber = resultSet.getInt("phonenumber");
-                int houseNumber = resultSet.getInt("housenumber");
-                String postalCode = resultSet.getString("postalcode");
-                String streetName = resultSet.getString("streetname");
-                Customer customer = new Customer(firstName, lastName, emailAdress, phoneNumber, houseNumber, postalCode, streetName);
-                customerList.add(customer);
+            if (resultSet.next()) {
+                return true;
+            } else {
+                return false;
             }
 
         } catch (SQLException ex) {
             Logger logger = Logger.getLogger(Customer.class.getName());
             logger.log(Level.SEVERE, ex.getMessage(), ex);
+            return false;
+        }
+    }
+    private boolean validateInput(String firstname, String lastname, String emailadres, String phonenumber, String housenumber, String postalcode, String streetname) {
+        String nameRegex = "^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$";
+        String emailRegex = "^[\\w-]+(\\.[\\w-]+)*@[\\w-]+(\\.[\\w-]+)*(\\.[a-zA-Z]{2,})$";
+        String phoneRegex = "^\\d+$";
+        String houseNumberRegex = "^\\d+$";
+        String postalCodeRegex = "^\\d{4}[a-zA-Z]{2}$";
+        String streetNameRegex = "^[a-zA-Z0-9 ]+$";
+
+        if (!firstname.matches(nameRegex) || !lastname.matches(nameRegex)) {
+            showAlert("Verkeerde naam", "Voornaam en achternaam kunnen alleen letters bevatten.");
+            return false;
+        } else if (!emailadres.matches(emailRegex)) {
+            showAlert("Verkeerde email", "Vul een geldend e-mailadres in.");
+            return false;
+        } else if (!phonenumber.matches(phoneRegex)) {
+            showAlert("Verkeerd telefoonnummer", "Een telefoonnummer kan alleen cijfers bevatten.");
+            return false;
+        } else if (!housenumber.matches(houseNumberRegex)) {
+            showAlert("Verkeerd huisnummer", "Een huisnummer kan  alleen cijfers bevatten");
+            return false;
+        } else if (!postalcode.matches(postalCodeRegex)) {
+            showAlert("verkeerde postcode", "Postcode moet er als volgt uitzien '1234AB'.");
+            return false;
+        } else if (!streetname.matches(streetNameRegex)) {
+            showAlert("verkeerde straatnaam", "Een  straatnaam bevat alleen letters.");
+            return false;
         }
 
-        return customerList;
+        return true;
     }
-
-
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
     @FXML
     public void switchToSceneLoginPage(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("login-page.fxml"));
@@ -128,18 +160,6 @@ public class CustomerInformation {
         stage.setScene(scene);
         stage.show();
     }
-
-//    @FXML
-//    public void initialize() {
-//        // add action listener to save button
-//        next.setOnAction(e -> {
-//            try {
-//                saveCustomerInDatabase();
-//            } catch (IOException ex) {
-//                Logger.getLogger(CustomerInformation.class.getName()).log(Level.SEVERE, null, ex);
-////            }
-////        });
-//    }
 
 }
 
