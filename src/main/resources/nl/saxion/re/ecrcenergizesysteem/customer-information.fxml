@@ -26,8 +26,9 @@
       <TextField fx:id="streetName" layoutX="428.0" layoutY="307.0" prefHeight="26.0" prefWidth="294.0" promptText="Straatnaam" />
       <TextField fx:id="phoneNumber" layoutX="79.0" layoutY="361.0" prefHeight="26.0" prefWidth="294.0" promptText="Telefoonnummer" />
       <TextField fx:id="emailadress" layoutX="428.0" layoutY="361.0" prefHeight="26.0" prefWidth="294.0" promptText="Emailadres" />
-      <Button fx:id="exit" layoutX="308.0" layoutY="430.0" mnemonicParsing="false" onAction="#switchToSceneMenuPage" text="Afbreken" />
-      <Button fx:id="next" layoutX="428.0" layoutY="430.0" mnemonicParsing="false" onAction="#switchToSceneCalculatorPage" text="Doorgaan" />
+      <Button fx:id="exit" layoutX="276.0" layoutY="430.0" mnemonicParsing="false" onAction="#switchToSceneMenuPage" text="Afbreken" />
+      <Button fx:id="exit1" layoutX="350.0" layoutY="430.0" mnemonicParsing="false" onAction="#switchToSceneCalculatorPage" text="Bestaande klant" />
+      <Button fx:id="next" layoutX="459.0" layoutY="430.0" mnemonicParsing="false" onAction="#switchToSceneCalculatorPage" text="Doorgaan" />
       <Label layoutX="87.0" layoutY="192.0" text="Voornaam" />
       <Label layoutX="87.0" layoutY="238.0" text="Postcode" />
       <Label layoutX="436.0" layoutY="192.0" text="Achternaam" />

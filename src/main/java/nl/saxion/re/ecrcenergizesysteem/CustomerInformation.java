@@ -40,12 +40,10 @@ public class CustomerInformation {
     private Button exit;
     @FXML
     private Button next;
-
     @FXML
     private Stage stage;
     @FXML
     private Scene scene;
-
     @FXML
     Parent root;
     Connection connection = null;

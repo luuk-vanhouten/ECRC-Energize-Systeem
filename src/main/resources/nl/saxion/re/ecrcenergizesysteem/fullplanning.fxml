@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
 
-<AnchorPane maxWidth="800.0" minWidth="800.0" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.saxion.re.ecrcenergizesysteem.Fullplanning">
+<AnchorPane maxWidth="800.0" minWidth="800.0" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.saxion.re.ecrcenergizesysteem.Fullplanning">
     <children>
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="210.0" layoutX="-9.0" layoutY="-18.0" stroke="BLACK" strokeType="INSIDE" width="833.0" />
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#d9d9d9" height="443.0" layoutY="112.0" smooth="false" stroke="TRANSPARENT" strokeType="INSIDE" width="825.0" />
@@ -21,13 +18,13 @@
         <Button fx:id="logoutButton" layoutX="717.0" layoutY="560.0" mnemonicParsing="false" onAction="#switchToSceneLoginPage" text="Uitloggen" />
         <Button fx:id="menuButton" layoutX="14.0" layoutY="559.0" mnemonicParsing="false" onAction="#switchToSceneMenuPage" prefHeight="26.0" prefWidth="69.0" text="Menu" />
 
-        <TableView fx:id="plannedOffersFullscreenTable" layoutX="14.0" layoutY="14.0" prefHeight="472.0" prefWidth="721.0">
+        <TableView fx:id="plannedOffersFullscreenTable" layoutX="39.0" layoutY="118.0" prefHeight="362.0" prefWidth="722.0">
             <columns>
                 <TableColumn fx:id="plannedOffersFullscreenIdColumn" prefWidth="150.0" text="Offer ID" />
                 <TableColumn fx:id="plannedOffersFullscreenDateColumn" prefWidth="150.0" text="Date" />
                 <TableColumn fx:id="plannedOffersFullscreenTeamColumn" prefWidth="150.0" text="Team" />
             </columns>
         </TableView>
-      <Button layoutX="320.0" layoutY="486.0" mnemonicParsing="false" onAction="#onAddOfferButtonClicked" text="voeg afspraak toe" />
+      <Button layoutX="352.0" layoutY="480.0" mnemonicParsing="false" onAction="#onAddOfferButtonClicked" text="voeg afspraak toe" />
     </children>
 </AnchorPane>

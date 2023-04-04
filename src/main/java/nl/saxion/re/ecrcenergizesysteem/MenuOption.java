@@ -45,7 +45,7 @@ public class MenuOption {
 
     @FXML
     public void switchToSceneOrderPage(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("order-page.fxml"));
+        root = FXMLLoader.load(getClass().getResource("offerTableView.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
