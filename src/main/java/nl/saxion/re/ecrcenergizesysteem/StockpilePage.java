@@ -104,17 +104,17 @@ public class StockpilePage {
                         statusLabel.setText("Failed to update zonnepanelen stock.");
                     }
                 }
-                try {
-                    preparedStatement = connection.prepareStatement(sql);
-                    ResultSet resultSet = preparedStatement.executeQuery();
-                    System.out.println(resultSet);
-
-                    while (resultSet.next()) {
-                        voorraadPaneel.setText(String.valueOf(resultSet.getInt("stock")));
-                    }
-                } catch (SQLException e) {
-                    statusLabel.setText("EEEEEEEEEEEEEE");
-                }
+//                try {
+//                    preparedStatement = connection.prepareStatement(sql);
+//                    ResultSet resultSet = preparedStatement.executeQuery();
+//                    System.out.println(resultSet);
+//
+//                    while (resultSet.next()) {
+//                        voorraadPaneel.setText(String.valueOf(resultSet.getInt("stock")));
+//                    }
+//                } catch (SQLException e) {
+//                    statusLabel.setText("EEEEEEEEEEEEEE");
+//                }
             } catch (SQLException e) {
                 statusLabel.setText("Error updating stock: " + e.getMessage());
             }

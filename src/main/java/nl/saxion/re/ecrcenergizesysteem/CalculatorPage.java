@@ -226,7 +226,7 @@ public class CalculatorPage {
                     connection.commit();
                     showAlert("Offerte gelukt en voorraad bijgewerkt.");
 
-                    Parent root = FXMLLoader.load(getClass().getResource("menu-option.fxml"));
+                    Parent root = FXMLLoader.load(getClass().getResource("offer-page.fxml"));
                     stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                     scene = new Scene(root);
                     stage.setScene(scene);
