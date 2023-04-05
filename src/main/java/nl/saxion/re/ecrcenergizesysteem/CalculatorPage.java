@@ -8,10 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -170,7 +167,6 @@ public class CalculatorPage {
             totalNumberOfSolarPanels = (int) j;
             answer.setText((int) j + " in portrait.");
         }
-        System.out.println(totalNumberOfSolarPanels);
     }
 
     @FXML
@@ -185,7 +181,6 @@ public class CalculatorPage {
         totalYield.setText(totalYieldValue.toString());
         getFase3.setSelected(totalYieldValue > 6000);
 
-//        }
 
     }
 
@@ -229,7 +224,7 @@ public class CalculatorPage {
 
                 if (rowsAffected > 0) {
                     connection.commit();
-                    System.out.println("Offer saved successfully, and stock updated.");
+                    showAlert("Offerte gelukt en voorraad bijgewerkt.");
 
                     Parent root = FXMLLoader.load(getClass().getResource("menu-option.fxml"));
                     stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -238,11 +233,11 @@ public class CalculatorPage {
                     stage.show();
                 } else {
                     connection.rollback();
-                    System.out.println("Failed to update stock.");
+                    showAlert("mislukt om de offerte op te slaan.");
                 }
             } else {
                 connection.rollback();
-                System.out.println("Failed to save the offer.");
+                showAlert("mislukt om de offerte op te slaan.");
             }
         } catch (SQLException ex) {
             try {
@@ -289,6 +284,13 @@ public class CalculatorPage {
                 + (Double.parseDouble(totalNrOfPanels.getText()) * 50);
         totalPriceBTW = totalPriceInclBTW * 1.21;
         totalCost.setText("€" + totalPriceBTW);
+    }
+    private void showAlert(String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("offerte");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }
 

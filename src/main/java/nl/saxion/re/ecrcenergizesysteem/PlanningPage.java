@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -104,7 +105,7 @@ public class PlanningPage {
         Offer selectedOffer = offerSelector.getSelectionModel().getSelectedItem();
 
         if (selectedOffer == null) {
-            System.out.println("No offer selected.");
+            showAlert("Er is geen offerte geselcteerd.");
             return;
         }
 
@@ -119,7 +120,7 @@ public class PlanningPage {
             ResultSet resultSet = checkTeamAvailabilityStmt.executeQuery();
 
             if (resultSet.next() && resultSet.getInt(1) > 0) {
-                System.out.println("The selected team is already assigned to an offer on this date.");
+                showAlert("Het geselecteerde team is op die datum al ingepland.");
                 return;
             }
         } catch (SQLException ex) {
@@ -138,11 +139,12 @@ public class PlanningPage {
 
 
             if (rowsAffected > 0) {
-                System.out.println("Offer updated successfully.");
+                showAlert("Gelukt om de installatiedatum toe te voegen.");
+
                 refreshOfferSelector(); // Refresh the offer selector after updating the offer
                 ((Node) event.getSource()).getScene().getWindow().hide(); // Close the window
             } else {
-                System.out.println("Failed to update the offer.");
+                showAlert("mislukt om de installatiedatum in te voeren.");
             }
         } catch (SQLException ex) {
             Logger.getLogger(PlanningPage.class.getName()).log(Level.SEVERE, null, ex);
@@ -159,5 +161,12 @@ public class PlanningPage {
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+    }
+    private void showAlert(String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("planning");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }
