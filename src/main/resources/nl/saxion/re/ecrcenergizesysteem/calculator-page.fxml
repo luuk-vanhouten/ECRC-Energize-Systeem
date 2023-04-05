@@ -21,7 +21,7 @@
             <Image url="@Pictures/logo.png" />
          </image>
       </ImageView>
-      <Label layoutX="121.0" layoutY="192.0" text="Telefoonnummer klant" />
+      <Label layoutX="121.0" layoutY="192.0" text="E-mailadres klant" />
       <ChoiceBox fx:id="customerEmailSelector" layoutX="113.0" layoutY="208.0" prefHeight="26.0" prefWidth="188.0" />
       <Label layoutX="336.0" layoutY="192.0" text="Type zonnepaneel" />
       <ChoiceBox fx:id="zonnepaneelselector" layoutX="328.0" layoutY="209.0" prefHeight="26.0" prefWidth="239.0" />

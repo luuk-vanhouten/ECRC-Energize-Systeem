@@ -9,32 +9,31 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Rectangle?>
 
-<AnchorPane maxHeight="600.0" maxWidth="800.0" minWidth="800.0" prefHeight="600.0" prefWidth="800.0"
-            xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="nl.saxion.re.ecrcenergizesysteem.StockpilePage">
-    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="210.0" layoutX="-9.0" layoutY="-18.0" stroke="BLACK"
-               strokeType="INSIDE" width="833.0"/>
-    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#d9d9d9" height="443.0" layoutY="112.0" smooth="false"
-               stroke="TRANSPARENT" strokeType="INSIDE" width="825.0"/>
-    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#53a135" height="88.0" layoutX="-9.0" layoutY="512.0" smooth="false"
-               stroke="TRANSPARENT" strokeType="INSIDE" width="833.0"/>
+<AnchorPane maxHeight="600.0" maxWidth="800.0" minWidth="800.0" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.saxion.re.ecrcenergizesysteem.StockpilePage">
+    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="210.0" layoutX="-9.0" layoutY="-18.0" stroke="BLACK" strokeType="INSIDE" width="833.0" />
+    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#d9d9d9" height="443.0" layoutY="112.0" smooth="false" stroke="TRANSPARENT" strokeType="INSIDE" width="825.0" />
+    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#53a135" height="88.0" layoutX="-9.0" layoutY="512.0" smooth="false" stroke="TRANSPARENT" strokeType="INSIDE" width="833.0" />
     <ImageView fitHeight="117.0" fitWidth="300.0" layoutX="226.0" pickOnBounds="true" preserveRatio="true">
         <image>
-            <Image url="@Pictures/logo.png"/>
+            <Image url="@Pictures/logo.png" />
         </image>
     </ImageView>
-    <Label layoutX="185.0" layoutY="232.0" text="Quantity:"/>
-    <TextField fx:id="quantityField" layoutX="266.0" layoutY="228.0"/>
-    <Button fx:id="buyButton" layoutX="480.0" layoutY="228.0" onAction="#buyZonnepanelen" text="Zonnepanelen kopen"/>
-    <Label fx:id="statusLabel" layoutX="644.0" layoutY="232.0" text="Label"/>
-    <ComboBox fx:id="zonnepaneelselector" layoutX="17.0" layoutY="228.0" prefWidth="150.0"/>
-    <ComboBox fx:id="omvormer" layoutX="17.0" layoutY="300.0" prefWidth="150.0"/>
-    <Label layoutX="185.0" layoutY="304.0" text="Quantity:"/>
-    <TextField fx:id="quantityFieldForOmvormer" layoutX="274.0" layoutY="300.0"/>
-    <Button fx:id="buyButtonOmvormer" layoutX="489.0" layoutY="300.0" onAction="#buyOmvormer" text="Buy Zonnepanelen"/>
-    <Label fx:id="statusOmvormer" layoutX="644.0" layoutY="304.0" text="Label"/>
-    <Button layoutX="717.0" layoutY="560.0" mnemonicParsing="false" onAction="#switchToSceneLoginPage"
-            text="Uitloggen"/>
-    <Button layoutX="14.0" layoutY="559.0" mnemonicParsing="false" onAction="#switchToSceneMenuPage" prefHeight="26.0"
-            prefWidth="69.0" text="Menu"/>
+    <Label layoutX="389.0" layoutY="242.0" text="Aantal kopen" />
+    <TextField fx:id="quantityField" layoutX="385.0" layoutY="260.0" />
+    <Button fx:id="buyButton" layoutX="541.0" layoutY="260.0" onAction="#buyZonnepanelen" text="Zonnepaneel inkopen" />
+    <Label fx:id="statusLabel" contentDisplay="CENTER" layoutX="183.0" layoutY="414.0" prefHeight="18.0" prefWidth="411.0" textAlignment="CENTER" />
+    <ComboBox fx:id="zonnepaneelselector" layoutX="128.0" layoutY="260.0" prefHeight="26.0" prefWidth="170.0" />
+    <ComboBox fx:id="omvormer" layoutX="128.0" layoutY="332.0" prefHeight="26.0" prefWidth="170.0" />
+    <Label layoutX="389.0" layoutY="314.0" text="Aantal kopen" />
+    <TextField fx:id="quantityFieldForOmvormer" layoutX="385.0" layoutY="332.0" />
+    <Button fx:id="buyButtonOmvormer" layoutX="541.0" layoutY="332.0" onAction="#buyOmvormer" prefHeight="26.0" prefWidth="132.0" text="Omvormer inkopen" />
+    <Label fx:id="statusOmvormer" contentDisplay="CENTER" layoutX="183.0" layoutY="455.0" prefHeight="18.0" prefWidth="411.0" textAlignment="CENTER" />
+    <Button layoutX="717.0" layoutY="560.0" mnemonicParsing="false" onAction="#switchToSceneLoginPage" text="Uitloggen" />
+    <Button layoutX="14.0" layoutY="559.0" mnemonicParsing="false" onAction="#switchToSceneMenuPage" prefHeight="26.0" prefWidth="69.0" text="Menu" />
+   <Label layoutX="132.0" layoutY="242.0" text="Type paneel" />
+   <Label layoutX="132.0" layoutY="314.0" text="Type omvormer" />
+   <Label fx:id="voorraadPaneel" layoutX="309.0" layoutY="264.0" prefHeight="18.0" prefWidth="65.0" />
+   <Label fx:id="voorraadOmvormer" layoutX="309.0" layoutY="336.0" prefHeight="18.0" prefWidth="70.0" />
+   <Label layoutX="309.0" layoutY="242.0" text="Voorraad" />
+   <Label layoutX="309.0" layoutY="314.0" text="Voorraad" />
 </AnchorPane>

@@ -25,6 +25,6 @@
                 <TableColumn fx:id="plannedOffersFullscreenTeamColumn" prefWidth="150.0" text="Team" />
             </columns>
         </TableView>
-      <Button layoutX="352.0" layoutY="480.0" mnemonicParsing="false" onAction="#onAddOfferButtonClicked" text="voeg afspraak toe" />
+      <Button layoutX="344.0" layoutY="480.0" mnemonicParsing="false" onAction="#onAddOfferButtonClicked" text="Voeg afspraak toe" />
     </children>
 </AnchorPane>

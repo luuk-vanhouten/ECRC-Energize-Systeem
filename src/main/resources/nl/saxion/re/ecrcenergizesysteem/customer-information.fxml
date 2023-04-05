@@ -33,7 +33,7 @@
       <Label layoutX="87.0" layoutY="289.0" text="Woonplaats" />
       <Label layoutX="436.0" layoutY="289.0" text="Straatnaam" />
       <Label layoutX="87.0" layoutY="343.0" text="Telefoonnummer" />
-      <Label layoutX="436.0" layoutY="343.0" text="Emailadres" />
+      <Label layoutX="436.0" layoutY="343.0" text="E-mailadres" />
       <Button layoutX="717.0" layoutY="560.0" mnemonicParsing="false" onAction="#switchToSceneLoginPage" text="Uitloggen" />
       <Button layoutX="14.0" layoutY="560.0" mnemonicParsing="false" onAction="#switchToSceneMenuPage" prefHeight="26.0" prefWidth="69.0" text="Menu" />
    </children>

@@ -20,17 +20,19 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class StockpilePage {
+
     Connection connection = null;
     PreparedStatement preparedStatement = null;
-
-
     ResultSet resultSet = null;
     ObservableList<String> data;
     @FXML
     ComboBox<Omvormer> omvormer;
     @FXML
     ComboBox<SolarPanel> zonnepaneelselector;
-
+    @FXML
+    public Label voorraadPaneel;
+    @FXML
+    public Label voorraadOmvormer;
     @FXML
     private TextField quantityField;
     @FXML
@@ -70,82 +72,106 @@ public class StockpilePage {
         stage.setScene(scene);
         stage.show();
     }
+
     @FXML
     private void buyZonnepanelen(ActionEvent event) {
         try {
             int quantity = Integer.parseInt(quantityField.getText());
 
             if (quantity <= 0) {
-                statusLabel.setText("Invalid quantity. Please enter a positive number.");
+                statusLabel.setText("Ongeldig. Kies een getal boven 0.");
                 return;
             }
 
             SolarPanel selectedPanel = zonnepaneelselector.getSelectionModel().getSelectedItem();
 
             if (selectedPanel == null) {
-                statusLabel.setText("Please select a solar panel.");
+                statusLabel.setText("Selecteer eerst een paneel.");
                 return;
             }
 
             try (Connection connection = Postgres.ConnectionUtil.connectdb()) {
                 String updateSql = "UPDATE zonnepaneel SET stock = stock + ? WHERE zonnepaneel_id = ?";
-
+                String sql = "SELECT * FROM zonnepaneel";
                 try (PreparedStatement preparedStatement = connection.prepareStatement(updateSql)) {
                     preparedStatement.setInt(1, quantity);
                     preparedStatement.setInt(2, selectedPanel.getId());
                     int rowsAffected = preparedStatement.executeUpdate();
-
                     if (rowsAffected > 0) {
-                        statusLabel.setText("Zonnepanelen successfully bought and stock updated!");
+                        statusLabel.setText("Zonnepanelen gekocht en voorraad aangepast!");
+                        voorraadOmvormer.setText(String.valueOf(resultSet.getInt("stock")));
                     } else {
                         statusLabel.setText("Failed to update zonnepanelen stock.");
                     }
+                }
+                try {
+                    preparedStatement = connection.prepareStatement(sql);
+                    ResultSet resultSet = preparedStatement.executeQuery();
+                    System.out.println(resultSet);
+
+                    while (resultSet.next()) {
+                        voorraadPaneel.setText(String.valueOf(resultSet.getInt("stock")));
+                    }
+                } catch (SQLException e) {
+                    statusLabel.setText("EEEEEEEEEEEEEE");
                 }
             } catch (SQLException e) {
                 statusLabel.setText("Error updating stock: " + e.getMessage());
             }
         } catch (NumberFormatException e) {
-            statusLabel.setText("Invalid input. Please enter a valid number.");
+            statusLabel.setText("Ongeldige input. Voer een getal in.");
         }
     }
+
     @FXML
     private void buyOmvormer(ActionEvent event) {
         try {
             int quantity = Integer.parseInt(quantityFieldForOmvormer.getText());
 
             if (quantity <= 0) {
-                statusOmvormer.setText("Invalid quantity. Please enter a positive number.");
+                statusOmvormer.setText("Ongeldig. Kies een getal boven 0.");
                 return;
             }
 
             Omvormer selectedOmvormer = omvormer.getSelectionModel().getSelectedItem();
 
             if (selectedOmvormer == null) {
-                statusOmvormer.setText("Please select a omvormer.");
+                statusOmvormer.setText("Selecteer eerst een omvormer.");
                 return;
             }
 
             try (Connection connection = Postgres.ConnectionUtil.connectdb()) {
                 String updateSql = "UPDATE omvormer SET stock = stock + ? WHERE omvormer_id = ?";
-
+                String sql = "SELECT * FROM omvormer";
                 try (PreparedStatement preparedStatement = connection.prepareStatement(updateSql)) {
                     preparedStatement.setInt(1, quantity);
                     preparedStatement.setInt(2, selectedOmvormer.getId());
                     int rowsAffected = preparedStatement.executeUpdate();
-
                     if (rowsAffected > 0) {
-                        statusOmvormer.setText("Zonnepanelen successfully bought and stock updated!");
+                        statusOmvormer.setText("Omvermers gekocht en voorraad aangepast!");
                     } else {
-                        statusOmvormer.setText("Failed to update zonnepanelen stock.");
+                        statusOmvormer.setText("Failed to update omvormer stock.");
                     }
+                }
+                try {
+                    preparedStatement = connection.prepareStatement(sql);
+                    ResultSet resultSet = preparedStatement.executeQuery();
+                    System.out.println(resultSet);
+
+                    while (resultSet.next()) {
+                        voorraadOmvormer.setText(String.valueOf(resultSet.getInt("stock")));
+                    }
+                } catch (SQLException e) {
+                    statusOmvormer.setText("EEEEEEEEEEEEEE");
                 }
             } catch (SQLException e) {
                 statusOmvormer.setText("Error updating stock: " + e.getMessage());
             }
         } catch (NumberFormatException e) {
-            statusOmvormer.setText("Invalid input. Please enter a valid number.");
+            statusOmvormer.setText("Ongeldige input. Voer een getal in.");
         }
     }
+
     public ObservableList<Omvormer> getObservableListOmvormer() {
         String sql = "SELECT* FROM omvormer";
         ObservableList<Omvormer> observableListOmvormer = FXCollections.observableArrayList();
@@ -157,6 +183,7 @@ public class StockpilePage {
                 int maxCapacity = resultSet.getInt("omvormer_max_capacity");
                 double price = resultSet.getDouble("price");
                 int id = resultSet.getInt("omvormer_id");
+                voorraadOmvormer.setText(String.valueOf(resultSet.getInt("stock")));
                 Omvormer omvormer = new Omvormer(name, maxCapacity, price, id);
                 observableListOmvormer.add(omvormer);
             }
@@ -168,6 +195,7 @@ public class StockpilePage {
         }
         return observableListOmvormer;
     }
+
     public ObservableList<SolarPanel> observableListSolarpanel() {
         String sql = "SELECT * FROM zonnepaneel";
         ObservableList<SolarPanel> data = FXCollections.observableArrayList();
@@ -184,6 +212,7 @@ public class StockpilePage {
                 int zonnepanelen_id = resultSet.getInt("zonnepaneel_id");
                 int opbrengst = resultSet.getInt("opbrengst");
                 SolarPanel solarPanel = new SolarPanel(name, price, lengte, breedte, zonnepanelen_id, opbrengst);
+                voorraadPaneel.setText(String.valueOf(resultSet.getInt("stock")));
                 data.add(solarPanel);
             }
             zonnepaneelselector.setItems(data);
