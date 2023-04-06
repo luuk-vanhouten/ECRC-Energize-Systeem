@@ -18,22 +18,33 @@
             <Image url="@Pictures/logo.png" />
         </image>
     </ImageView>
-    <Label layoutX="389.0" layoutY="242.0" text="Aantal kopen" />
-    <TextField fx:id="quantityField" layoutX="385.0" layoutY="260.0" />
-    <Button fx:id="buyButton" layoutX="541.0" layoutY="260.0" onAction="#buyZonnepanelen" text="Zonnepaneel inkopen" />
-    <Label fx:id="statusLabel" contentDisplay="CENTER" layoutX="183.0" layoutY="414.0" prefHeight="18.0" prefWidth="411.0" textAlignment="CENTER" />
-    <ComboBox fx:id="zonnepaneelselector" layoutX="128.0" layoutY="260.0" prefHeight="26.0" prefWidth="170.0" />
-    <ComboBox fx:id="omvormer" layoutX="128.0" layoutY="332.0" prefHeight="26.0" prefWidth="170.0" />
-    <Label layoutX="389.0" layoutY="314.0" text="Aantal kopen" />
-    <TextField fx:id="quantityFieldForOmvormer" layoutX="385.0" layoutY="332.0" />
-    <Button fx:id="buyButtonOmvormer" layoutX="541.0" layoutY="332.0" onAction="#buyOmvormer" prefHeight="26.0" prefWidth="132.0" text="Omvormer inkopen" />
-    <Label fx:id="statusOmvormer" contentDisplay="CENTER" layoutX="183.0" layoutY="455.0" prefHeight="18.0" prefWidth="411.0" textAlignment="CENTER" />
+    <Label layoutX="269.0" layoutY="208.0" text="Aantal kopen" />
+    <TextField fx:id="quantityField" layoutX="265.0" layoutY="226.0" />
+    <Button fx:id="buyButton" layoutX="421.0" layoutY="226.0" onAction="#buyZonnepanelen" text="Zonnepaneel inkopen" />
+    <Label fx:id="statusLabel" contentDisplay="CENTER" layoutX="202.0" layoutY="408.0" prefHeight="18.0" prefWidth="411.0" textAlignment="CENTER" />
+    <ComboBox fx:id="zonnepaneelselector" layoutX="85.0" layoutY="226.0" prefHeight="26.0" prefWidth="170.0" />
+    <ComboBox fx:id="omvormer" layoutX="85.0" layoutY="298.0" prefHeight="26.0" prefWidth="170.0" />
+    <Label layoutX="269.0" layoutY="280.0" text="Aantal kopen" />
+    <TextField fx:id="quantityFieldForOmvormer" layoutX="265.0" layoutY="298.0" />
+    <Button fx:id="buyButtonOmvormer" layoutX="421.0" layoutY="298.0" onAction="#buyOmvormer" prefHeight="26.0" prefWidth="132.0" text="Omvormer inkopen" />
+    <Label fx:id="statusOmvormer" contentDisplay="CENTER" layoutX="202.0" layoutY="455.0" prefHeight="18.0" prefWidth="411.0" textAlignment="CENTER" />
     <Button layoutX="717.0" layoutY="560.0" mnemonicParsing="false" onAction="#switchToSceneLoginPage" text="Uitloggen" />
     <Button layoutX="14.0" layoutY="559.0" mnemonicParsing="false" onAction="#switchToSceneMenuPage" prefHeight="26.0" prefWidth="69.0" text="Menu" />
-   <Label layoutX="132.0" layoutY="242.0" text="Type paneel" />
-   <Label layoutX="132.0" layoutY="314.0" text="Type omvormer" />
-   <Label fx:id="voorraadPaneel" layoutX="309.0" layoutY="264.0" prefHeight="18.0" prefWidth="65.0" />
-   <Label fx:id="voorraadOmvormer" layoutX="309.0" layoutY="336.0" prefHeight="18.0" prefWidth="70.0" />
-   <Label layoutX="309.0" layoutY="242.0" text="Voorraad" />
-   <Label layoutX="309.0" layoutY="314.0" text="Voorraad" />
+   <Label layoutX="89.0" layoutY="208.0" text="Type paneel" />
+   <Label layoutX="89.0" layoutY="280.0" text="Type omvormer" />
+   <Label fx:id="voorraadOmvormer" layoutX="606.0" layoutY="303.0" prefHeight="18.0" prefWidth="70.0" />
+   <Label layoutX="564.0" layoutY="217.0" text="Voorraad" />
+   <Label layoutX="564.0" layoutY="289.0" text="Voorraad" />
+   <Label fx:id="voorraadPaneel" layoutX="664.0" layoutY="230.0" prefHeight="18.0" prefWidth="65.0" />
+   <Label fx:id="voorraadPaneel1" layoutX="667.0" layoutY="230.0" prefHeight="18.0" prefWidth="65.0" />
+   <Label layoutX="564.0" layoutY="230.0" text="Sunburn Factor 50:" />
+   <Label layoutX="564.0" layoutY="303.0" text="SB2000:" />
+   <Label layoutX="564.0" layoutY="321.0" text="SB5000:" />
+   <Label layoutX="564.0" layoutY="339.0" text="SB6000:" />
+   <Label layoutX="564.0" layoutY="357.0" text="SB8000:" />
+   <Label layoutX="564.0" layoutY="375.0" text="SB12000:" />
+   <Label fx:id="voorraadOmvormer5000" layoutX="606.0" layoutY="321.0" prefHeight="18.0" prefWidth="70.0" />
+   <Label fx:id="voorraadOmvormer6000" layoutX="606.0" layoutY="339.0" prefHeight="18.0" prefWidth="70.0" />
+   <Label fx:id="voorraadOmvormer8000" layoutX="606.0" layoutY="357.0" prefHeight="18.0" prefWidth="70.0" />
+   <Label fx:id="voorraadOmvormer12000" layoutX="613.0" layoutY="375.0" prefHeight="18.0" prefWidth="70.0" />
 </AnchorPane>

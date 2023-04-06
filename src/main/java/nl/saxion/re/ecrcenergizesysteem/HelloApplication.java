@@ -23,7 +23,7 @@ public class HelloApplication extends Application {
         }
         String configContents = Files.readString(configFile);
         System.out.println("Config contents: " + configContents);
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("offerTableView.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("menu-option.fxml"));
         Scene scene = new Scene(loader.load());
         primaryStage.setScene(scene);
         primaryStage.show();

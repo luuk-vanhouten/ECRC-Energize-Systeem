@@ -119,28 +119,27 @@ public class CustomerInformation {
         String phoneRegex = "^\\d+$";
         String houseNumberRegex = "^\\d+$";
         String postalCodeRegex = "^\\d{4}[a-zA-Z]{2}$";
-        String streetNameRegex = "^[a-zA-Z0-9 ]+$";
+        String streetNameRegex = "^[a-zA-Z]+$";
 
         if (!firstname.matches(nameRegex) || !lastname.matches(nameRegex)) {
             showAlert("Verkeerde naam", "Voornaam en achternaam kunnen alleen letters bevatten.");
             return false;
-        } else if (!emailadres.matches(emailRegex)) {
-            showAlert("Verkeerde email", "Vul een geldend e-mailadres in.");
-            return false;
-        } else if (!phonenumber.matches(phoneRegex)) {
-            showAlert("Verkeerd telefoonnummer", "Een telefoonnummer kan alleen cijfers bevatten.");
+        } else if (!postalcode.matches(postalCodeRegex)) {
+            showAlert("verkeerde postcode", "Postcode moet er als volgt uitzien '1234AB'.");
             return false;
         } else if (!housenumber.matches(houseNumberRegex)) {
             showAlert("Verkeerd huisnummer", "Een huisnummer kan  alleen cijfers bevatten");
             return false;
-        } else if (!postalcode.matches(postalCodeRegex)) {
-            showAlert("verkeerde postcode", "Postcode moet er als volgt uitzien '1234AB'.");
-            return false;
         } else if (!streetname.matches(streetNameRegex)) {
             showAlert("verkeerde straatnaam", "Een  straatnaam bevat alleen letters.");
             return false;
+        } else if (!phonenumber.matches(phoneRegex)) {
+            showAlert("Verkeerd telefoonnummer", "Een telefoonnummer kan alleen cijfers bevatten.");
+            return false;
+        } else if (!emailadres.matches(emailRegex)) {
+            showAlert("Verkeerde email", "Vul een geldend e-mailadres in.");
+            return false;
         }
-
         return true;
     }
     private void showAlert(String title, String message) {

@@ -34,6 +34,14 @@ public class StockpilePage {
     @FXML
     public Label voorraadOmvormer;
     @FXML
+    public Label voorraadOmvormer5000;
+    @FXML
+    public Label voorraadOmvormer6000;
+    @FXML
+    public Label voorraadOmvormer8000;
+    @FXML
+    public Label voorraadOmvormer12000;
+    @FXML
     private TextField quantityField;
     @FXML
     private TextField quantityFieldForOmvormer;
@@ -97,24 +105,26 @@ public class StockpilePage {
                     preparedStatement.setInt(1, quantity);
                     preparedStatement.setInt(2, selectedPanel.getId());
                     int rowsAffected = preparedStatement.executeUpdate();
-                    if (rowsAffected > 0) {
-                        statusLabel.setText("Zonnepanelen gekocht en voorraad aangepast!");
-                        voorraadOmvormer.setText(String.valueOf(resultSet.getInt("stock")));
-                    } else {
-                        statusLabel.setText("Failed to update zonnepanelen stock.");
+                    while (resultSet.next()) {
+                        if (rowsAffected > 0) {
+                            statusLabel.setText("Zonnepanelen gekocht en voorraad aangepast!");
+                            voorraadOmvormer.setText(String.valueOf(resultSet.getInt("stock")));
+                        } else {
+                            statusLabel.setText("Failed to update zonnepanelen stock.");
+                        }
                     }
                 }
-//                try {
-//                    preparedStatement = connection.prepareStatement(sql);
-//                    ResultSet resultSet = preparedStatement.executeQuery();
-//                    System.out.println(resultSet);
-//
-//                    while (resultSet.next()) {
-//                        voorraadPaneel.setText(String.valueOf(resultSet.getInt("stock")));
-//                    }
-//                } catch (SQLException e) {
-//                    statusLabel.setText("EEEEEEEEEEEEEE");
-//                }
+                try {
+                    preparedStatement = connection.prepareStatement(sql);
+                    ResultSet resultSet = preparedStatement.executeQuery();
+                    System.out.println(resultSet);
+
+                    while (resultSet.next()) {
+                        voorraadPaneel.setText(String.valueOf(resultSet.getInt("stock")));
+                    }
+                } catch (SQLException e) {
+                    statusLabel.setText("EEEEEEEEEEEEEE");
+                }
             } catch (SQLException e) {
                 statusLabel.setText("Error updating stock: " + e.getMessage());
             }
@@ -159,7 +169,17 @@ public class StockpilePage {
                     System.out.println(resultSet);
 
                     while (resultSet.next()) {
-                        voorraadOmvormer.setText(String.valueOf(resultSet.getInt("stock")));
+                        if (resultSet.getInt("omvormer_id") == 600) {
+                            voorraadOmvormer.setText(String.valueOf(resultSet.getInt("stock")));
+                        } else if (resultSet.getInt("omvormer_id") == 601) {
+                            voorraadOmvormer5000.setText(String.valueOf(resultSet.getInt("stock")));
+                        } else if (resultSet.getInt("omvormer_id") == 602) {
+                            voorraadOmvormer6000.setText(String.valueOf(resultSet.getInt("stock")));
+                        } else if (resultSet.getInt("omvormer_id") == 603) {
+                            voorraadOmvormer8000.setText(String.valueOf(resultSet.getInt("stock")));
+                        } else if (resultSet.getInt("omvormer_id") == 604) {
+                            voorraadOmvormer12000.setText(String.valueOf(resultSet.getInt("stock")));
+                        }
                     }
                 } catch (SQLException e) {
                     statusOmvormer.setText("EEEEEEEEEEEEEE");
@@ -183,9 +203,19 @@ public class StockpilePage {
                 int maxCapacity = resultSet.getInt("omvormer_max_capacity");
                 double price = resultSet.getDouble("price");
                 int id = resultSet.getInt("omvormer_id");
-                voorraadOmvormer.setText(String.valueOf(resultSet.getInt("stock")));
                 Omvormer omvormer = new Omvormer(name, maxCapacity, price, id);
                 observableListOmvormer.add(omvormer);
+                if (resultSet.getInt("omvormer_id") == 600) {
+                    voorraadOmvormer.setText(String.valueOf(resultSet.getInt("stock")));
+                } else if (resultSet.getInt("omvormer_id") == 601) {
+                    voorraadOmvormer5000.setText(String.valueOf(resultSet.getInt("stock")));
+                } else if (resultSet.getInt("omvormer_id") == 602) {
+                    voorraadOmvormer6000.setText(String.valueOf(resultSet.getInt("stock")));
+                } else if (resultSet.getInt("omvormer_id") == 603) {
+                    voorraadOmvormer8000.setText(String.valueOf(resultSet.getInt("stock")));
+                } else if (resultSet.getInt("omvormer_id") == 604) {
+                    voorraadOmvormer12000.setText(String.valueOf(resultSet.getInt("stock")));
+                }
             }
             omvormer.setItems(observableListOmvormer);
 
