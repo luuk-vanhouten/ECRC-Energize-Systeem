@@ -6,6 +6,7 @@ module nl.saxion.re.ecrcenergizesysteem {
     requires com.dlsc.formsfx;
     requires java.sql;
     requires java.desktop;
+    requires org.apache.pdfbox;
 
     opens nl.saxion.re.ecrcenergizesysteem to javafx.fxml;
     exports nl.saxion.re.ecrcenergizesysteem;

@@ -10,6 +10,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.common.PDRectangle;
+import org.apache.pdfbox.pdmodel.font.PDType1Font;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -18,6 +23,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 
 public class CalculatorPage {
 
@@ -34,7 +40,7 @@ public class CalculatorPage {
     private Label totalYield;
     @FXML
     Label totalCost;
-    private double totalPriceBTW;
+    private double totalPriceWithoutBTW;
     private int totalNumberOfSolarPanels;
     @FXML
     private ChoiceBox<Customer> customerEmailSelector;
@@ -252,7 +258,7 @@ public class CalculatorPage {
             preparedStatement = connection.prepareStatement(insertOfferSql);
             preparedStatement.setInt(1, customer.getPhoneNumber());
             preparedStatement.setInt(2, selectedPanel.getId());
-            preparedStatement.setDouble(3, totalPriceBTW);
+            preparedStatement.setDouble(3, totalPriceWithoutBTW);
             preparedStatement.setInt(4, total);
             preparedStatement.setInt(5, selectedOmvormer.getId());
             preparedStatement.setBoolean(6, fase3);
@@ -269,6 +275,12 @@ public class CalculatorPage {
                 if (rowsAffected > 0) {
                     connection.commit();
                     showAlert("Offerte gelukt en voorraad bijgewerkt.");
+
+                    try {
+                        createOfferPDF("offer" + customer.getEmailadress() + ".pdf", customer, selectedPanel, selectedOmvormer, total, totalPriceWithoutBTW, fase3);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
 
                     Parent root = FXMLLoader.load(getClass().getResource("offer-page.fxml"));
                     stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -299,6 +311,7 @@ public class CalculatorPage {
                 e.printStackTrace();
             }
         }
+
     }
 
 
@@ -354,9 +367,10 @@ public class CalculatorPage {
 
         double totalPriceInclBTW = fase3 + (selectedPanel.getPrice() * Double.parseDouble(totalPanelsText)) + selectedOmvormer.getPrice() + 1000
                 + (Double.parseDouble(totalPanelsText) * 50);
-        totalPriceBTW = totalPriceInclBTW * 1.21;
-        totalCost.setText("€" + totalPriceBTW);
+        totalPriceWithoutBTW = totalPriceInclBTW;
+        totalCost.setText("€" + totalPriceWithoutBTW);
     }
+
     private void showAlert(String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("offerte");
@@ -365,6 +379,43 @@ public class CalculatorPage {
         alert.showAndWait();
     }
 
+    private void createOfferPDF(String outputFile, Customer customer, SolarPanel solarPanel, Omvormer omvormer, int quantity, double totalCost, boolean fase3) throws IOException {
+        try (PDDocument document = new PDDocument()) {
+            PDPage page = new PDPage(PDRectangle.A4);
+            document.addPage(page);
+
+            PDPageContentStream contentStream = new PDPageContentStream(document, page);
+
+            contentStream.setFont(PDType1Font.HELVETICA_BOLD, 18);
+            contentStream.setLeading(20);
+            contentStream.beginText();
+            contentStream.newLineAtOffset(50, 750);
+            contentStream.showText("Offer");
+            contentStream.newLine();
+            contentStream.setFont(PDType1Font.HELVETICA, 12);
+            contentStream.showText("Customer: " + customer.getEmailadress());
+            contentStream.newLine();
+            contentStream.showText(quantity + " Zonnepaneel: " + solarPanel.getName() + "  €" + (quantity * solarPanel.getPrice()));
+            contentStream.newLine();
+            contentStream.showText("1 omvormer:" + omvormer.getName() + "  €" + omvormer.getPrice());
+            contentStream.newLine();
+            contentStream.showText("Installatie- en materiaalkosten:" + "  €" + (1000 + (quantity * 50)));
+            contentStream.newLine();
+            contentStream.showText("Fase 3: " + (fase3 ? "  €" + 800 : "Niet nodig"));
+            contentStream.newLine();
+            contentStream.showText("Totale kosten: " + "  €" + totalPriceWithoutBTW);
+            contentStream.newLine();
+            contentStream.showText("BTW: " + "  €" + (totalCost * 0.21));
+            contentStream.newLine();
+            contentStream.showText("Totaal inclusief BTW: " + (totalPriceWithoutBTW * 1.21));
+            contentStream.endText();
+
+
+            contentStream.close();
+
+            document.save(outputFile);
+        }
+    }
 }
 
 
