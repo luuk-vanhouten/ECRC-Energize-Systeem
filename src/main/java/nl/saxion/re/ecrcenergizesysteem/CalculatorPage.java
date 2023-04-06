@@ -54,8 +54,7 @@ public class CalculatorPage {
     private Stage stage;
     @FXML
     private Scene scene;
-    @FXML
-    private CheckBox fase3;
+
     @FXML
     private CheckBox getFase3;
 
@@ -154,11 +153,30 @@ public class CalculatorPage {
     @FXML
     void onCalculateButtonPressed() throws SQLException {
         SolarPanel selectedPanel = zonnepaneelselector.getSelectionModel().getSelectedItem();
-        double length = selectedPanel.getLength();
-        double width = (selectedPanel.getWidth());
 
-        double i = (Math.floor(Double.parseDouble(widthCalculator.getText()) / width) * Math.floor(Double.parseDouble(lengthCalculator.getText()) / length));
-        double j = (Math.floor(Double.parseDouble(widthCalculator.getText()) / length) * Math.floor(Double.parseDouble(lengthCalculator.getText()) / width));
+        if (selectedPanel == null) {
+            showAlert("Selecteer een type zonnepaneel.");
+            return;
+        }
+
+        String widthInput = widthCalculator.getText();
+        String lengthInput = lengthCalculator.getText();
+
+        if (widthInput == null || widthInput.isEmpty()) {
+            showAlert("Vul de breedte in.");
+            return;
+        }
+
+        if (lengthInput == null || lengthInput.isEmpty()) {
+            showAlert("Vul de lengte in.");
+            return;
+        }
+
+        double length = selectedPanel.getLength();
+        double width = selectedPanel.getWidth();
+
+        double i = (Math.floor(Double.parseDouble(widthInput) / width) * Math.floor(Double.parseDouble(lengthInput) / length));
+        double j = (Math.floor(Double.parseDouble(widthInput) / length) * Math.floor(Double.parseDouble(lengthInput) / width));
 
         if (i > j) {
             totalNumberOfSolarPanels = (int) i;
@@ -196,8 +214,34 @@ public class CalculatorPage {
         Customer customer = customerEmailSelector.getSelectionModel().getSelectedItem();
         SolarPanel selectedPanel = zonnepaneelselector.getSelectionModel().getSelectedItem();
         Omvormer selectedOmvormer = omvormer.getSelectionModel().getSelectedItem();
+        String totalPanelsText = totalNrOfPanels.getText();
         Boolean fase3 = getFase3.isSelected();
-        int total = Integer.parseInt(totalNrOfPanels.getText());
+
+        if (customer == null) {
+            showAlert("Selecteer een klant.");
+            return;
+        }
+
+        if (selectedPanel == null) {
+            showAlert("Selecteer het type zonnepaneel.");
+            return;
+        }
+
+        if (selectedOmvormer == null) {
+            showAlert("Selecteer het type omvormer.");
+            return;
+        }
+
+        if (totalPanelsText == null || totalPanelsText.isEmpty()) {
+            showAlert("Selecteer het aantal zonnepanelen.");
+            return;
+        }
+        if (totalCost.getText() == null || totalCost.getText().isEmpty()) {
+            showAlert("Bereken de totale prijs voordat u verder gaat.");
+            return;
+        }
+
+        int total = Integer.parseInt(totalPanelsText);
 
         String insertOfferSql = "INSERT INTO offer(phonenumber, zonnepaneel_id, total_price, quantity_zonnepaneel, omvormer_id, fase3) VALUES(?, ?, ?, ?, ?,?)";
         String updateStockSql = "UPDATE zonnepaneel SET stock = stock - ? WHERE zonnepaneel_id = ?";
@@ -277,11 +321,39 @@ public class CalculatorPage {
     }
 
 
+    @FXML
     public void onTotalPriceButtonPressed(ActionEvent event) {
         SolarPanel selectedPanel = zonnepaneelselector.getSelectionModel().getSelectedItem();
         Omvormer selectedOmvormer = omvormer.getSelectionModel().getSelectedItem();
-        double totalPriceInclBTW = (selectedPanel.getPrice() * Double.parseDouble(totalNrOfPanels.getText())) + selectedOmvormer.getPrice() + 1000
-                + (Double.parseDouble(totalNrOfPanels.getText()) * 50);
+        String totalPanelsText = totalNrOfPanels.getText();
+        boolean fase3Aansluiting = getFase3.isSelected();
+
+        if (selectedPanel == null) {
+            showAlert("Selecteer het type zonnepaneel.");
+            return;
+        }
+
+        if (selectedOmvormer == null) {
+            showAlert("Selecteer het type omvormer.");
+            return;
+        }
+
+        if (totalPanelsText == null || totalPanelsText.isEmpty()) {
+            showAlert("Vul het aantal zonnepanelen in.");
+            return;
+        }
+        int inputTotalPanels = Integer.parseInt(totalPanelsText);
+        if (inputTotalPanels > totalNumberOfSolarPanels) {
+            showAlert("Kan niet hoger zijn dan de maximale hoeveelheid op een dak.");
+            return;
+        }
+        int fase3 = 0;
+        if (fase3Aansluiting) {
+            fase3 = 800;
+        }
+
+        double totalPriceInclBTW = fase3 + (selectedPanel.getPrice() * Double.parseDouble(totalPanelsText)) + selectedOmvormer.getPrice() + 1000
+                + (Double.parseDouble(totalPanelsText) * 50);
         totalPriceBTW = totalPriceInclBTW * 1.21;
         totalCost.setText("€" + totalPriceBTW);
     }
@@ -292,6 +364,7 @@ public class CalculatorPage {
         alert.setContentText(message);
         alert.showAndWait();
     }
+
 }
 
 

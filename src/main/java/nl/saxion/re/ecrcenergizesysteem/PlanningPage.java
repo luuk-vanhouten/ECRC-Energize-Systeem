@@ -105,7 +105,7 @@ public class PlanningPage {
         Offer selectedOffer = offerSelector.getSelectionModel().getSelectedItem();
 
         if (selectedOffer == null) {
-            showAlert("Er is geen offerte geselcteerd.");
+            showAlert("Er is geen offerte geselecteerd.");
             return;
         }
 
