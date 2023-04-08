@@ -277,7 +277,7 @@ public class CalculatorPage {
                     showAlert("Offerte gelukt en voorraad bijgewerkt.");
 
                     try {
-                        createOfferPDF("offer" + customer.getEmailadress() + ".pdf", customer, selectedPanel, selectedOmvormer, total, totalPriceWithoutBTW, fase3);
+                        createOfferPDF("offer.pdf", customer, selectedPanel, selectedOmvormer, total, totalPriceWithoutBTW, fase3);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
