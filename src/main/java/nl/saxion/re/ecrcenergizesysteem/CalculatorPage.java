@@ -282,7 +282,7 @@ public class CalculatorPage {
                         e.printStackTrace();
                     }
 
-                    Parent root = FXMLLoader.load(getClass().getResource("offer-page.fxml"));
+                    Parent root = FXMLLoader.load(getClass().getResource("menu-option.fxml"));
                     stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                     scene = new Scene(root);
                     stage.setScene(scene);
@@ -390,14 +390,14 @@ public class CalculatorPage {
             contentStream.setLeading(20);
             contentStream.beginText();
             contentStream.newLineAtOffset(50, 750);
-            contentStream.showText("Offer");
+            contentStream.showText("Offerte");
             contentStream.newLine();
             contentStream.setFont(PDType1Font.HELVETICA, 12);
-            contentStream.showText("Customer: " + customer.getEmailadress());
+            contentStream.showText("E-mail klant: " + customer.getEmailadress());
             contentStream.newLine();
-            contentStream.showText(quantity + " Zonnepaneel: " + solarPanel.getName() + "  €" + (quantity * solarPanel.getPrice()));
+            contentStream.showText(quantity + " zonnepanelen van het type " + solarPanel.getName() + ". Prijs: €" + (quantity * solarPanel.getPrice()));
             contentStream.newLine();
-            contentStream.showText("1 omvormer:" + omvormer.getName() + "  €" + omvormer.getPrice());
+            contentStream.showText("1 omvormer van het type " + omvormer.getName() + ". Prijs: €" + omvormer.getPrice());
             contentStream.newLine();
             contentStream.showText("Installatie- en materiaalkosten:" + "  €" + (1000 + (quantity * 50)));
             contentStream.newLine();
