@@ -258,7 +258,7 @@ public class CalculatorPage {
             preparedStatement = connection.prepareStatement(insertOfferSql);
             preparedStatement.setInt(1, customer.getPhoneNumber());
             preparedStatement.setInt(2, selectedPanel.getId());
-            preparedStatement.setDouble(3, Double.parseDouble(totalCost.getText()));
+            preparedStatement.setDouble(3, (totalPriceWithoutBTW * 1.21));
             preparedStatement.setInt(4, total);
             preparedStatement.setInt(5, selectedOmvormer.getId());
             preparedStatement.setBoolean(6, fase3);
