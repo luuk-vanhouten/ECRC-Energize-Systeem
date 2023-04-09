@@ -119,7 +119,7 @@ public class CustomerInformation {
         String phoneRegex = "^\\d+$";
         String houseNumberRegex = "^\\d+$";
         String postalCodeRegex = "^\\d{4}[a-zA-Z]{2}$";
-        String streetNameRegex = "^[a-zA-Z]+$";
+        String streetNameRegex = "^[a-zA-Z ]+[',. -]+$";
 
         if (!firstname.matches(nameRegex) || !lastname.matches(nameRegex)) {
             showAlert("Verkeerde naam", "Voornaam en achternaam kunnen alleen letters bevatten.");

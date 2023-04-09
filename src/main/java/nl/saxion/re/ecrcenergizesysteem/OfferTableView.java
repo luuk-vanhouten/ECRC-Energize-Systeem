@@ -12,12 +12,15 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.common.PDRectangle;
+import org.apache.pdfbox.pdmodel.font.PDType1Font;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -64,7 +67,7 @@ public class OfferTableView {
     }
 
     private void loadOfferTableData() {
-        String query = "SELECT o.offer_id, c.firstname, c.lastname, c.postalcode, c.phonenumber, z.product_name, o.quantity_zonnepaneel, o.omvormer_id, o.total_price, om.name " +
+        String query = "SELECT o.offer_id, c.firstname, c.lastname, c.postalcode, c.phonenumber, z.product_name, o.quantity_zonnepaneel, o.omvormer_id, o.total_price, om.name, o.installation_date, o.team " +
                 "FROM offer o " +
                 "JOIN customer c ON c.phonenumber = o.phonenumber " +
                 "JOIN zonnepaneel z ON z.zonnepaneel_id = o.zonnepaneel_id " + "JOIN omvormer om ON om.omvormer_id = o.omvormer_id";
@@ -84,9 +87,17 @@ public class OfferTableView {
                 String inverterName = resultSet.getString("name");
                 int quantity_zonnepaneel = resultSet.getInt("quantity_zonnepaneel");
                 double totalPrice = resultSet.getDouble("total_price");
+                Date installationDate = resultSet.getDate("installation_date");
+                int team = resultSet.getInt("team");
 
-                OfferTableData offerTableData = new OfferTableData(offerId, firstName, lastName, postalCode, phoneNumber, solarPanelName, inverterName, totalPrice, quantity_zonnepaneel);
+                OfferTableData offerTableData = new OfferTableData(offerId, firstName, lastName, postalCode, phoneNumber, solarPanelName, inverterName, totalPrice, quantity_zonnepaneel, installationDate, team);
                 offerTableDataList.add(offerTableData);
+                try {
+                    createPDF(offerTableData); // Generate the PDF
+                } catch (IOException e) {
+                    Logger lgr = Logger.getLogger(OfferTableView.class.getName());
+                    lgr.log(Level.SEVERE, e.getMessage(), e);
+                }
             }
         } catch (SQLException ex) {
             Logger lgr = Logger.getLogger(Postgres.class.getName());
@@ -114,4 +125,46 @@ public class OfferTableView {
         stage.setScene(scene);
         stage.show();
     }
+
+    private void createPDF(OfferTableData offerTableData) throws IOException {
+        if (offerTableData.getInstallationDate() != null && (offerTableData.getInstallationDate().toLocalDate().equals(LocalDate.now()) || offerTableData.getInstallationDate().toLocalDate().isBefore(LocalDate.now()))) {
+            try (PDDocument document = new PDDocument()) {
+                PDPage page = new PDPage(PDRectangle.A4);
+                document.addPage(page);
+
+                try (PDPageContentStream contentStream = new PDPageContentStream(document, page)) {
+                    contentStream.setFont(PDType1Font.HELVETICA_BOLD, 18);
+                    contentStream.setLeading(20);
+                    contentStream.beginText();
+                    contentStream.newLineAtOffset(100, 700);
+                    contentStream.showText("Installatieofferte #" + offerTableData.getOfferId());
+                    contentStream.newLine();
+                    contentStream.setFont(PDType1Font.HELVETICA, 12);
+                    contentStream.showText("Installatiedatum: " + offerTableData.getInstallationDate().toString());
+                    contentStream.newLine();
+                    contentStream.showText("Team: " + offerTableData.getTeam());
+                    contentStream.newLine();
+                    contentStream.showText("Naam: " + offerTableData.getFirstName() + " " + offerTableData.getLastName());
+                    contentStream.newLine();
+                    contentStream.showText("Soort zonnepanelen: " + offerTableData.getSolarPanelName());
+                    contentStream.newLine();
+                    contentStream.showText("Aantal zonnepanelen: " + offerTableData.getQuantity_zonnepaneel());
+                    contentStream.newLine();
+                    contentStream.showText("Soort omvormer: " + offerTableData.getInverterName());
+                    contentStream.newLine();
+                    contentStream.showText("Adres: " + offerTableData.getPostalCode());
+                    contentStream.newLine();
+                    contentStream.showText("Telefoonnummer: " + offerTableData.getPhoneNumber());
+                    contentStream.endText();
+                }
+
+                document.save("Offer_" + offerTableData.getOfferId() + "_Installation.pdf");
+            }
+
+
+        }
+    }
 }
+
+
+
