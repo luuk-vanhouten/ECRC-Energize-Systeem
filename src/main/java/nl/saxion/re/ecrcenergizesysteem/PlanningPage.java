@@ -104,6 +104,23 @@ public class PlanningPage {
     void onSaveButtonPressed(ActionEvent event) {
         Offer selectedOffer = offerSelector.getSelectionModel().getSelectedItem();
 
+
+
+        if (datePicker.getValue() == null) {
+            showAlert("Er is geen datum geselecteerd.");
+            return;
+        }
+
+        if (teamSelector.getValue() == null) {
+            showAlert("Er is geen team geselecteerd.");
+            return;
+        }
+        if (selectedOffer == null) {
+            showAlert("Er is geen offerte geselecteerd.");
+            return;
+        }
+
+
         if (selectedOffer == null) {
             showAlert("Er is geen offerte geselecteerd.");
             return;
