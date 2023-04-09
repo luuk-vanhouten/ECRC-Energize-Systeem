@@ -258,7 +258,7 @@ public class CalculatorPage {
             preparedStatement = connection.prepareStatement(insertOfferSql);
             preparedStatement.setInt(1, customer.getPhoneNumber());
             preparedStatement.setInt(2, selectedPanel.getId());
-            preparedStatement.setDouble(3, totalPriceWithoutBTW);
+            preparedStatement.setDouble(3, Double.parseDouble(totalCost.getText()));
             preparedStatement.setInt(4, total);
             preparedStatement.setInt(5, selectedOmvormer.getId());
             preparedStatement.setBoolean(6, fase3);
@@ -277,7 +277,7 @@ public class CalculatorPage {
                     showAlert("Offerte gelukt en voorraad bijgewerkt.");
 
                     try {
-                        createOfferPDF("offer.pdf", customer, selectedPanel, selectedOmvormer, total, totalPriceWithoutBTW, fase3);
+                        createOfferPDF("offer" + customer + ".pdf", customer, selectedPanel, selectedOmvormer, total, totalPriceWithoutBTW, fase3);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
